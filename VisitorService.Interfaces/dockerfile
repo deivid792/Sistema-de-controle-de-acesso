@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+WORKDIR /app
+
+COPY ../*.sln ./
+COPY ../VisitorService.Domain/*.csproj ./VisitorService.Domain/
+COPY ../VisitorService.Infrastructure/*.csproj ./VisitorService.Infrastructure/
+COPY ../VisitorService.Application/*.csproj ./VisitorService.Application/
+RUN dotnet restore
+
+COPY ../VisitorService.Domain ./VisitorService.Domain
+COPY ../VisitorService.Infrastructure ./VisitorService.Infrastructure
+COPY ../VisitorService.Application ./VisitorService.Application
+COPY ../VisitorService.Interfaces ./VisitorService.Interfaces
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "VisitorService.Interfaces.dll"]

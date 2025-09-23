@@ -1,0 +1,11 @@
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\bin\Debug\net9.0\VisitorService.Domain.deps.json
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\bin\Debug\net9.0\VisitorService.Domain.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\bin\Debug\net9.0\VisitorService.Domain.pdb
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.AssemblyInfoInputs.cache
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.AssemblyInfo.cs
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.csproj.CoreCompileInputs.cache
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\refint\VisitorService.Domain.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.pdb
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\ref\VisitorService.Domain.dll

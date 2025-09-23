@@ -1,0 +1,15 @@
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\bin\Debug\net9.0\VisitorService.Application.deps.json
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\bin\Debug\net9.0\VisitorService.Application.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\bin\Debug\net9.0\VisitorService.Application.pdb
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\bin\Debug\net9.0\VisitorService.Domain.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\bin\Debug\net9.0\VisitorService.Domain.pdb
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.csproj.AssemblyReference.cache
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.AssemblyInfoInputs.cache
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.AssemblyInfo.cs
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.csproj.CoreCompileInputs.cache
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorS.74E088A9.Up2Date
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\refint\VisitorService.Application.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.pdb
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\ref\VisitorService.Application.dll
