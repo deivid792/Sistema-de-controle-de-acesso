@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VisitorService.Domain\VisitorService.Domain.csproj" />
+    <ProjectReference Include="..\VisitorService.Application\VisitorService.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -10,7 +11,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.9" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
   <PropertyGroup>

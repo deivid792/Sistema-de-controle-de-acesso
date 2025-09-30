@@ -16,6 +16,8 @@ namespace VisitorService.Domain.Entities
         public ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
         public ICollection<ValidationToken> ValidationTokens { get; private set; } = new List<ValidationToken>();
         public ICollection<Visit> Visits { get; private set; } = new List<Visit>();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+
 
         private User() { }
 

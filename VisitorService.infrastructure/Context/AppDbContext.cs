@@ -16,6 +16,8 @@ namespace VisitorService.Infrastructure.Context
         public DbSet<ValidationToken> ValidationTokens { get; set; } = default!;
         public DbSet<Visit> Visits { get; set; } = default!;
         public DbSet<VisitHistory> VisitHistories { get; set; } = default!;
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,6 +50,12 @@ namespace VisitorService.Infrastructure.Context
                 .HasOne(vh => vh.Visit)
                 .WithMany(v => v.VisitHistories)
                 .HasForeignKey(vh => vh.VisitId);
+
+                modelBuilder.Entity<RefreshToken>()
+    .HasOne(rt => rt.User)
+    .WithMany(u => u.RefreshTokens)
+    .HasForeignKey(rt => rt.UserId);
+
         }
     }
 }
