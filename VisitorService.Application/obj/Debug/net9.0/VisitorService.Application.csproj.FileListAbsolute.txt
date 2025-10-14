@@ -13,3 +13,4 @@ C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\De
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\refint\VisitorService.Application.dll
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.pdb
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\ref\VisitorService.Application.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Application\obj\Debug\net9.0\VisitorService.Application.sourcelink.json

@@ -1,0 +1,6 @@
+{
+  "VisitorService.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application",
+  "VisitorService.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Domain",
+  "VisitorService.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure",
+  "VisitorService.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Interfaces"
+}

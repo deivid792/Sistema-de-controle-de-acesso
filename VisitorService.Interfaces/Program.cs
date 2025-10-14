@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using VisitorService.Application.Interfaces;
 using VisitorService.Infrastructure.Context;
+using VisitorService.Infrastructure.Services;
 using VisitorService.Interfaces.Extensions;
 using VisitorService.Interfaces.Middleware;
 
@@ -12,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 

@@ -9,3 +9,4 @@ C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\n
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\refint\VisitorService.Domain.dll
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.pdb
 C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\ref\VisitorService.Domain.dll
+C:\Users\deivi\OneDrive\Desktop\VisitorService\VisitorService.Domain\obj\Debug\net9.0\VisitorService.Domain.sourcelink.json

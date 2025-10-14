@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "VisitorService.Domain/1.0.0": {
+        "runtime": {
+          "VisitorService.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "VisitorService.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
