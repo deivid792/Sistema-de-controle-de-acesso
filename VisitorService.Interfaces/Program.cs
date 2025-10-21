@@ -17,7 +17,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
-
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 app.UseGlobalExceptionHandler();
