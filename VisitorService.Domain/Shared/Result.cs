@@ -27,6 +27,11 @@ namespace VisitorService.Domain.Shared.results
 
         public static Result<T> Success(T value) => new Result<T>(value);
         public static Result<T> Fail(string error) => new Result<T>(error);
+
+        internal static void Fail(char v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     // Classe para retorno VOID

@@ -23,6 +23,37 @@ namespace VisitorService.Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            var userBuilder = modelBuilder.Entity<User>();
+
+            userBuilder.OwnsOne(u => u.Email, email =>
+            {
+                email.Property(e => e.Value)
+                    .HasColumnName("Email")
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
+            userBuilder.OwnsOne(u => u.Password, password =>
+            {
+                password.Property(p => p.Value)
+                    .HasColumnName("PasswordHash")
+                    .IsRequired();
+            });
+
+            userBuilder.OwnsOne(u => u.Phone, phone =>
+            {
+                phone.Property(p => p.Value)
+                    .HasColumnName("Phone")
+                    .HasMaxLength(20);
+            }).Navigation(p => p).IsRequired(false);;
+
+            userBuilder.OwnsOne(u => u.Cnpj, cnpj =>
+            {
+                cnpj.Property(c => c.Value)
+                    .HasColumnName("Cnpj")
+                    .HasMaxLength(18); 
+            }).Navigation(p => p).IsRequired(false);;
+
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 

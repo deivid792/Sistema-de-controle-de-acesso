@@ -1,17 +1,20 @@
-using System;
-using System.Collections.Generic;
+using VisitorService.Domain.Shared.results;
+using VisitorService.Domain.ValueObject;
+using VisitorService.Domain.ValueObjects;
 
 namespace VisitorService.Domain.Entities
 {
     public sealed class User
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; } = default!;
-        public string Email { get; private set; } = default!;
-        public string Password { get; private set; } = default!;
-        public string? Phone { get; private set; }
+        public Name Name { get; private set; } = default!;
+        public Email Email { get; private set; } = default!;
+        public Password Password { get; private set; } = default!;
+        public Phone? Phone { get; private set; }
         public string? Company { get; private set; }
-        public string? Cnpj { get; private set; }
+        public Cnpj? Cnpj { get; private set; }
+        public Guid? CreatedByUserId { get; private set; }
+        public string? CreatedByUserName { get; private set; }
 
         public ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
         public ICollection<ValidationToken> ValidationTokens { get; private set; } = new List<ValidationToken>();
@@ -21,20 +24,52 @@ namespace VisitorService.Domain.Entities
 
         private User() { }
 
-        public User(string name, string email, string password)
+        private User(Name name, Email email, Password password, Phone? phone, string? company, Cnpj? cnpj)
         {
             Id = Guid.NewGuid();
             Name = name;
             Email = email;
             Password = password;
+            Phone = phone;
+            Company = company;
+            Cnpj = cnpj;
+
         }
 
-        public void UpdateData(string name, string? phone = null, string? company = null, string? cnpj = null)
+        public static Result<User> Create(Name name, Email email, Password password, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
+        {
+            var user = new User(name, email, password, phone, company, cnpj);
+            return Result<User>.Success(user);
+        }
+
+        public void UpdateData(Name name, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
         {
             Name = name;
             Phone = phone;
             Company = company;
             Cnpj = cnpj;
+        }
+        public void AddRole(UserRole role)
+        {
+            if (!UserRoles.Contains(role))
+                UserRoles.Add(role);
+        }
+
+        public void RemoveRole(UserRole role)
+        {
+            if (UserRoles.Contains(role))
+                UserRoles.Remove(role);
+        }
+
+        public void AddRefreshToken(RefreshToken token)
+        {
+            RefreshTokens.Add(token);
+        }
+
+        public void SetCreatedBy(Guid managerId, string? managerName = null)
+        {
+            CreatedByUserId = managerId;
+            CreatedByUserName = managerName;
         }
     }
 }
