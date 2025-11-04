@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VisitorService.Application.Interfaces;
+using VisitorService.Application.UseCases;
 using VisitorService.Infrastructure.Context;
 using VisitorService.Infrastructure.Services;
 using VisitorService.Interfaces.Extensions;
@@ -15,6 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddScoped<RegisterVisitorHandler>();
+builder.Services.AddScoped<LoginHandler>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddMemoryCache();

@@ -49,10 +49,21 @@ namespace VisitorService.Domain.Entities
             Company = company;
             Cnpj = cnpj;
         }
-        public void AddRole(UserRole role)
+        public Result AddRole(Role role)
         {
-            if (!UserRoles.Contains(role))
-                UserRoles.Add(role);
+            if (role == null)
+                return Result.Fail("Role cannot be null.");
+
+            foreach (var userRole in UserRoles)
+            {
+                if (userRole.RoleId == role.Id)
+                    return Result.Fail("User already has this role.");
+            }
+
+            var newUserRole = new UserRole(this, role);
+            UserRoles.Add(newUserRole);
+
+            return Result.Success();
         }
 
         public void RemoveRole(UserRole role)
