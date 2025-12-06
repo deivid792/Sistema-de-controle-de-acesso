@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using VisitorService.Domain.Shared.results;
+using VisitorService.Domain.Shared;
 
 namespace VisitorService.Domain.ValueObject
 {
@@ -7,44 +7,57 @@ namespace VisitorService.Domain.ValueObject
     public class Password
     {
         public string Value { get; }
-
+        private readonly Notification _notification = new();
+        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
+        public bool HasErrors => _notification.HasErrors;
         private Password(string value)
         {
             Value = value;
         }
 
-        public static Result<Password> Create(string value)
+        public static Password Create(string value)
         {
-            if (value == null)
-                return Result<Password>.Fail("A senha não pode ser nula");
+            var tempPassword = new Password(value);
+            var notification = tempPassword._notification;
 
-            if (value.Trim().Length == 0)
-                return Result<Password>.Fail("A senha não pode estar vazia ou apenas espaços");
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                notification.add("Password", "A senha não pode estar vazia ou apenas espaços");
+                return tempPassword;
+            }
 
-            value = value.Trim();
+            var normalized = tempPassword.Value.Trim();
 
-            if (value.Length < 8)
-                return Result<Password>.Fail("A senha deve conter pelo menos 8 caracteres");
+            if (normalized.Length < 8)
+                notification.add("Password", "A senha deve conter pelo menos 8 caracteres");
 
-            if (value.Length > 128)
-                return Result<Password>.Fail("A senha não deve exceder 128 caracteres");
+            if (normalized.Length > 12)
+                notification.add("Password", "A senha não deve exceder 12 caracteres");
 
-            if (!Regex.IsMatch(value, "[A-Z]"))
-                return Result<Password>.Fail("A senha deve conter pelo menos uma letra maiúscula");
+            if (!Regex.IsMatch(normalized, "[A-Z]"))
+                notification.add("Password", "A senha deve conter pelo menos uma letra maiúscula");
 
-            if (!Regex.IsMatch(value, "[a-z]"))
-                return Result<Password>.Fail("A senha deve conter pelo menos uma letra minúscula");
+            if (!Regex.IsMatch(normalized, "[a-z]"))
+                notification.add("Password", "A senha deve conter pelo menos uma letra minúscula");
 
-            if (!Regex.IsMatch(value, "[0-9]"))
-                return Result<Password>.Fail("A senha deve conter pelo menos um número");
+            if (!Regex.IsMatch(normalized, "[0-9]"))
+                notification.add("Password", "A senha deve conter pelo menos um número");
 
-            if (!Regex.IsMatch(value, "[!@#$%^&*(),.?\":{}|<>]"))
-                return Result<Password>.Fail("A senha deve conter pelo menos um caractere especial");
+            if (!Regex.IsMatch(normalized, "[!@#$%^&*(),.?\":{}|<>]"))
+                notification.add("Password", "A senha deve conter pelo menos um caractere especial");
 
-            if (value.Contains(" "))
-                return Result<Password>.Fail("A senha não deve conter espaços em branco no meio");
+            if (normalized.Contains(" "))
+                notification.add("Password", "A senha não deve conter espaços em branco no meio");
 
-            return Result<Password>.Success(new Password(value));
+            if (notification.HasErrors)
+                return tempPassword;
+
+            return new Password(normalized);
+        }
+
+        public static Password FromHash(string value)
+        {
+            return new Password(value);
         }
     }
 }

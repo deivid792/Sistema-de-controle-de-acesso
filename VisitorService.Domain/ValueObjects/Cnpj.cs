@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using VisitorService.Domain.Shared.results;
+using VisitorService.Domain.Shared;
 
 namespace VisitorService.Domain.ValueObject
 {
@@ -7,34 +7,37 @@ namespace VisitorService.Domain.ValueObject
     {
         public string Value { get; private set; }
 
+        private readonly Notification _notification = new();
+        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
+        public bool HasErrors => _notification.HasErrors;
+
         private Cnpj(string value)
         {
             Value = value;
         }
 
-        public static Result<Cnpj> Create(string? cnpj)
+        public static Cnpj Create(string? cnpj)
         {
+            var tempCnpj = new Cnpj(cnpj);
+            var notification = tempCnpj._notification;
+
             if (string.IsNullOrWhiteSpace(cnpj))
-                return Result<Cnpj>.Fail("O CNPJ é obrigatório.");
+                notification.add("CNPJ", "O CNPJ não pode ser nulo");
 
-            // Remove caracteres não numéricos
-            cnpj = Regex.Replace(cnpj, @"\D", "");
+            var normalized = Regex.Replace(cnpj, @"\D", "");
 
-            if (cnpj.Length != 14)
-                return Result<Cnpj>.Fail("O CNPJ deve conter 14 dígitos.");
+            if (normalized.Length != 14)
+                notification.add("CNPJ", "O CNPJ deve conter 14 dígitos.");
 
-            // Impede CNPJs com todos os dígitos iguais
-            if (cnpj.All(c => c == cnpj[0]))
-                return Result<Cnpj>.Fail("O CNPJ é inválido.");
+            if (normalized.All(c => c == cnpj[0]))
+                notification.add("CNPJ", "O CNPJ é inválido.");
 
-            // Validação dos dígitos verificadores
-            if (!IsValidCnpj(cnpj))
-                return Result<Cnpj>.Fail("O CNPJ informado é inválido.");
+            if (!IsValidCnpj(normalized))
+                notification.add("CNPJ", "O CNPJ informado é inválido.");
 
-            // Normaliza formato (XX.XXX.XXX/XXXX-XX)
-            string formatted = Convert.ToUInt64(cnpj).ToString(@"00\.000\.000\/0000\-00");
+            string formatted = Convert.ToUInt64(normalized).ToString(@"00\.000\.000\/0000\-00");
 
-            return Result<Cnpj>.Success(new Cnpj(formatted));
+            return new Cnpj(formatted);
         }
 
         private static bool IsValidCnpj(string cnpj)
@@ -71,6 +74,8 @@ namespace VisitorService.Domain.ValueObject
 
             return cnpj.EndsWith(digit);
         }
+        public static Cnpj FromDatabase(string value)
+    => new Cnpj(value);
 
     }
 }

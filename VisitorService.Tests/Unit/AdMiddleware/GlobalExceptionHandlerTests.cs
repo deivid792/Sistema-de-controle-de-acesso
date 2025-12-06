@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using Xunit;
-using VisitorService.Interfaces.Middleware; // <-- namespace do seu middleware
+using VisitorService.Interfaces.Middleware;
 
 public class GlobalExceptionHandlerTests
 {
@@ -19,10 +19,8 @@ public class GlobalExceptionHandlerTests
                 webBuilder.UseTestServer();
                 webBuilder.Configure(app =>
                 {
-                    // Middleware global de tratamento de exceções
                     app.UseGlobalExceptionHandler();
 
-                    // Força uma exceção para testar o middleware
                     app.Run(context => throw new Exception("Test exception"));
                 });
             })

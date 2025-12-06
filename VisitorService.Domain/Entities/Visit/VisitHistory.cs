@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace VisitorService.Domain.Entities
 {
     public sealed class VisitHistory

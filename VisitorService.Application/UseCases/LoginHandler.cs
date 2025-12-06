@@ -2,12 +2,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
-using VisitorService.Domain.Shared.results;
+using VisitorService.Application.Shared.results;
 using VisitorService.Domain.ValueObject;
+using VisitorService.Domain.Services;
+
 
 namespace VisitorService.Application.UseCases
 {
-    public class LoginHandler
+    public class LoginHandler : IloginHandler
 {
     private readonly IUserRepository _userRepo;
     private readonly IPasswordService _passwordService;
@@ -22,11 +24,11 @@ namespace VisitorService.Application.UseCases
 
     public async Task<Result<AuthResultDto>> Handle(LoginCommand command)
     {
-        var emailResult = Email.create(command.Email);
-        if (!emailResult.IsSuccess)
-            return Result<AuthResultDto>.Fail(emailResult.Error!);
+        var emailResult = Email.Create(command.Email);
+        if (emailResult.HasErrors)
+            return Result<AuthResultDto>.Fail("Email inválido");
 
-        var user = await _userRepo.GetByEmailAsync(emailResult.Value!.Value);
+        var user = await _userRepo.GetByEmailAsync(emailResult.Value!);
         if (user is null)
             return Result<AuthResultDto>.Fail("Credenciais inválidas.");
 
@@ -36,7 +38,7 @@ namespace VisitorService.Application.UseCases
 
         var roles = user.UserRoles?.Select(ur => ur.Role.Name.ToString()) ?? Enumerable.Empty<string>();
 
-        var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value, roles);
+        var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value, roles!);
 
         var dto = new AuthResultDto
         {

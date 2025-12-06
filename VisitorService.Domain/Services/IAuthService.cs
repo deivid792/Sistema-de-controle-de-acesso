@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-
-namespace VisitorService.Application.Interfaces
+namespace VisitorService.Domain.Services
 {
     public interface IAuthService
 {

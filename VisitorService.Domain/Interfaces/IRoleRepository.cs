@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Enums;
 
-namespace VisitorService.Application.Interfaces
+namespace VisitorService.Domain.Interfaces
 {
     public interface IRoleRepository
 {

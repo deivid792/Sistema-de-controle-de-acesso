@@ -11,7 +11,7 @@ namespace VisitorService.Domain.Entities
         public User User { get; private set; } = default!;
         public Role Role { get; private set; } = default!;
 
-        private UserRole() { } // EF Core
+        private UserRole() { } 
 
         public UserRole(User user, Role role)
         {

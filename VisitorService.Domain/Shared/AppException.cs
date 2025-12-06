@@ -1,5 +1,3 @@
-using System;
-
 namespace VisitorService.Domain.Shared.Exceptions
 {
     public class DomainException : Exception

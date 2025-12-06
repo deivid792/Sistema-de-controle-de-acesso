@@ -54,6 +54,16 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.14.1, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -120,6 +130,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -140,12 +156,12 @@
         }
       }
     },
-    "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
+    "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj",
-        "projectName": "VisitorService.infrastructure",
-        "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj",
+        "projectName": "VisitorService.Infrastructure",
+        "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\deivi\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
@@ -194,15 +210,23 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.9, )"
+              "version": "[9.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.9, )"
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             },
             "Microsoft.Extensions.Configuration.Binder": {
               "target": "Package",
@@ -273,8 +297,8 @@
               "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj": {
                 "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj"
               },
-              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
-                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj"
+              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj"
               }
             }
           }
@@ -302,6 +326,12 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -366,8 +396,8 @@
               "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Domain\\VisitorService.Domain.csproj": {
                 "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Domain\\VisitorService.Domain.csproj"
               },
-              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
-                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj"
+              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj"
               },
               "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Interfaces\\VisitorService.Interfaces.csproj": {
                 "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Interfaces\\VisitorService.Interfaces.csproj"

@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
 using VisitorService.Domain.Enums;
-using VisitorService.Domain.Shared.results;
+using VisitorService.Domain.Shared;
 using VisitorService.Domain.ValueObjects;
 
 namespace VisitorService.Domain.Entities
@@ -12,6 +10,10 @@ namespace VisitorService.Domain.Entities
         public RoleName Name { get; private set; } = default!;
         public string Description { get; private set; } = default!;
 
+        private readonly Notification _notification = new();
+        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
+        public bool HasErrors => _notification.HasErrors;
+
         public ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
 
         private Role() { }
@@ -19,40 +21,47 @@ namespace VisitorService.Domain.Entities
         private Role(RoleName name)
         {
             Name = name;
+
+            _notification.addRange(name.Notification);
         }
-        public static Result<Role> Create(RoleName name)
+        public static Role Create(RoleName name)
         {
+            var role = new Role(name);
+            var notification = role._notification;
             if (name is null)
-                return Result<Role>.Fail("RoleName cannot be null.");
+                notification.add("Role", "RoleName não pode ser nulo.");
 
-            return Result<Role>.Success(new Role(name));
+            return role;
         }
 
-        public static Result<Role> Visitor()
+        public static Role Visitor()
         {
-            var nameResult = RoleName.Create(RoleType.Visitor);
-            if (!nameResult.IsSuccess)
-                return Result<Role>.Fail(nameResult.Error!);
+            var name = RoleName.Create(RoleType.Visitor);
+            var role = Role.Create(name);
 
-            return Create(nameResult.Value!);
+            role._notification.addRange(name.Notification);
+
+            return role;
         }
 
-        public static Result<Role> Manager()
+        public static Role Manager()
         {
-            var nameResult = RoleName.Create(RoleType.Manager);
-            if (!nameResult.IsSuccess)
-                return Result<Role>.Fail(nameResult.Error!);
+            var name = RoleName.Create(RoleType.Visitor);
+            var role = Role.Create(name);
 
-            return Create(nameResult.Value!);
+            role._notification.addRange(name.Notification);
+
+            return role;
         }
 
-        public static Result<Role> Security()
+        public static Role Security()
         {
-            var nameResult = RoleName.Create(RoleType.Security);
-            if (!nameResult.IsSuccess)
-                return Result<Role>.Fail(nameResult.Error!);
+            var name = RoleName.Create(RoleType.Visitor);
+            var role = Role.Create(name);
 
-            return Create(nameResult.Value!);
+            role._notification.addRange(name.Notification);
+
+            return role;
         }
     }
 }

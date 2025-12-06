@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using VisitorService.Domain.Entities;
 
 namespace VisitorService.Application.Interfaces

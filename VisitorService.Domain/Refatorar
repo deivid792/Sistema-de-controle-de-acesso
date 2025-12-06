@@ -1,0 +1,37 @@
+/* usar notifictions ao invés de result no domain
+
+usar sealed records nos value objets
+
+tornar as listas de outras classes além de User impossivel de usar o metódo add fora da propria classes
+
+verifica se entidades como visits estão ou se precisam estar em abstract factory
+
+verifica se entidades como visits tem ou precisa ter tipos complexos
+
+public async Task<bool> ExistsVisitInDateAndTime(DateOnly date, TimeOnly time)
+{
+    return await _context.Visits.AnyAsync(v =>
+        v.Date == date &&
+        v.Time == time &&
+        v.Status != "Rejeitada"
+    );
+}
+[Authorize]
+        [Route("api/visitas")]
+        public async Task<IActionResult> CreateVisit([FromBody] CreateVisitDto dto)
+        {
+            // pega o ID do usuário autenticado direto do token
+            var userId = User.GetUserId();
+
+            dto.UserId = userId;
+
+            var result = await _CreateVisitHandler.Handler(dto);
+
+            if (!result.IsSuccess)
+                return BadRequest(result.Errors);
+
+            return Ok(result.Value);
+
+        }
+
+*/

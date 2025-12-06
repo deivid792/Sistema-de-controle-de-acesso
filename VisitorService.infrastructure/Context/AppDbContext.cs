@@ -1,59 +1,80 @@
 using Microsoft.EntityFrameworkCore;
 using VisitorService.Domain.Entities;
+using VisitorService.Domain.Shared;
+using VisitorService.Domain.ValueObject;
+using VisitorService.Domain.ValueObjects;
+using VisitorService.Domain.Enums;
 
 namespace VisitorService.Infrastructure.Context
 {
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
-        public DbSet<User> Users { get; set; } = default!;
-        public DbSet<Role> Roles { get; set; } = default!;
-        public DbSet<UserRole> UserRoles { get; set; } = default!;
-        public DbSet<ValidationToken> ValidationTokens { get; set; } = default!;
-        public DbSet<Visit> Visits { get; set; } = default!;
-        public DbSet<VisitHistory> VisitHistories { get; set; } = default!;
-        public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
-
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Role> Roles => Set<Role>();
+        public DbSet<UserRole> UserRoles => Set<UserRole>();
+        public DbSet<ValidationToken> ValidationTokens => Set<ValidationToken>();
+        public DbSet<Visit> Visits => Set<Visit>();
+        public DbSet<VisitHistory> VisitHistories => Set<VisitHistory>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Ignore<NotificationItem>();
 
             var userBuilder = modelBuilder.Entity<User>();
 
+            // Name
+            userBuilder.Property(u => u.Name)
+                .HasConversion(
+                    v => v.Value,
+                    v => Name.FromDatabase(v)
+                );
+
+            // Email
             userBuilder.OwnsOne(u => u.Email, email =>
             {
-                email.Property(e => e.Value)
-                    .HasColumnName("Email")
-                    .IsRequired()
-                    .HasMaxLength(255);
+            email.Property(e => e.Value)
+                .HasColumnName("Email")
+                .HasMaxLength(254)
+                .IsRequired();
             });
 
-            userBuilder.OwnsOne(u => u.Password, password =>
-            {
-                password.Property(p => p.Value)
-                    .HasColumnName("PasswordHash")
-                    .IsRequired();
-            });
+            // PasswordHash
+            userBuilder.Property(u => u.Password)
+                .HasConversion(
+                    v => v.Value,
+                    v => Password.FromHash(v)
+                );
 
-            userBuilder.OwnsOne(u => u.Phone, phone =>
-            {
-                phone.Property(p => p.Value)
-                    .HasColumnName("Phone")
-                    .HasMaxLength(20);
-            }).Navigation(p => p).IsRequired(false);;
+            // Phone
+            userBuilder.Property(u => u.Phone)
+                .HasConversion(
+                    v => v!.Value,
+                    v => Phone.FromDatabase(v)
+                );
 
-            userBuilder.OwnsOne(u => u.Cnpj, cnpj =>
-            {
-                cnpj.Property(c => c.Value)
-                    .HasColumnName("Cnpj")
-                    .HasMaxLength(18); 
-            }).Navigation(p => p).IsRequired(false);;
+            // CNPJ
+            userBuilder.Property(u => u.Cnpj)
+                .HasConversion(
+                    v => v!.Value,
+                    v => Cnpj.FromDatabase(v)
+                );
 
+            // ROLE
+            var roleBuilder = modelBuilder.Entity<Role>();
+
+            roleBuilder.Property(r => r.Name)
+                .HasConversion(
+                    v => (int)v.Value,
+                    v => RoleName.FromDatabase((RoleType)v)
+                )
+                .HasColumnName("RoleType")
+                .IsRequired();
+
+            // USER ROLE
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
@@ -67,26 +88,7 @@ namespace VisitorService.Infrastructure.Context
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
 
-            modelBuilder.Entity<ValidationToken>()
-                .HasOne(vt => vt.User)
-                .WithMany(u => u.ValidationTokens)
-                .HasForeignKey(vt => vt.UserId);
-
-            modelBuilder.Entity<Visit>()
-                .HasOne(v => v.User)
-                .WithMany(u => u.Visits)
-                .HasForeignKey(v => v.UserId);
-
-            modelBuilder.Entity<VisitHistory>()
-                .HasOne(vh => vh.Visit)
-                .WithMany(v => v.VisitHistories)
-                .HasForeignKey(vh => vh.VisitId);
-
-                modelBuilder.Entity<RefreshToken>()
-    .HasOne(rt => rt.User)
-    .WithMany(u => u.RefreshTokens)
-    .HasForeignKey(rt => rt.UserId);
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

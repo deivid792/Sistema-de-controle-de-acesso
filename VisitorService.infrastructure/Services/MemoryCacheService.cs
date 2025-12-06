@@ -1,17 +1,16 @@
 using Microsoft.Extensions.Caching.Memory;
-using visitor.cfg.aplication.Interface.Cache;
+using VisitorService.aplication.Interface.Cache;
 
 namespace Visitor.Cfg.Infrastructure.Cache
 {
     public class MemoryCacheService : ICacheService
     {
         private readonly IMemoryCache _cache;
-        private readonly TimeSpan _defaultExpiration;
+        private readonly TimeSpan _defaultExpiration = TimeSpan.FromMinutes(30);
 
-        public MemoryCacheService(IMemoryCache cache, TimeSpan defaultExpiration)
+        public MemoryCacheService(IMemoryCache cache)
         {
             _cache = cache;
-            _defaultExpiration = defaultExpiration;
         }
 
         public Task<T?> GetAsync<T>(string key)
