@@ -1,67 +1,65 @@
+using System.Collections.ObjectModel;
 using VisitorService.Domain.Enums;
 using VisitorService.Domain.Shared;
 using VisitorService.Domain.ValueObjects;
 
 namespace VisitorService.Domain.Entities
 {
-    public sealed class Role
+    public sealed class Role : BaseEntity
     {
-        public int Id { get; private set; }
         public RoleName Name { get; private set; } = default!;
         public string Description { get; private set; } = default!;
 
-        private readonly Notification _notification = new();
-        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
-        public bool HasErrors => _notification.HasErrors;
+        private readonly List<User> _Users = new();
 
-        public ICollection<UserRole> UserRoles { get; private set; } = new List<UserRole>();
+        public IReadOnlyCollection<User> Users => _Users.AsReadOnly();
 
-        private Role() { }
+        private Role() : base() { }
 
-        private Role(RoleName name)
+        private Role(RoleName name, string description) : base()
         {
             Name = name;
+            Description = description;
 
-            _notification.addRange(name.Notification);
         }
-        public static Role Create(RoleName name)
+        public static Role Create(RoleName name, string description)
         {
-            var role = new Role(name);
-            var notification = role._notification;
-            if (name is null)
-                notification.add("Role", "RoleName não pode ser nulo.");
+            var contract = new Contract()
+            .Requires()
+            .IsNotNullOrWhiteSpace(description, "Role.Create")
+            .MinLength(description, 5, "Role.Create")
+            .MaxLength(description, 100, "Role.Create");
+
+            var role = new Role(name, description);
+
+            if(contract.HasErrors)
+                role.AddRangeNotification(contract.Errors);
+
+            if (name.HasErrors)
+                role.AddRangeNotification(name.Errors);
 
             return role;
         }
 
         public static Role Visitor()
         {
-            var name = RoleName.Create(RoleType.Visitor);
-            var role = Role.Create(name);
-
-            role._notification.addRange(name.Notification);
-
-            return role;
+            return Role.Create(
+                RoleName.Create(RoleType.Visitor),
+                 "Perfil com permissões limitadas, focado na visualização de dados e gerenciamento do próprio cadastro.");
         }
 
         public static Role Manager()
         {
-            var name = RoleName.Create(RoleType.Visitor);
-            var role = Role.Create(name);
-
-            role._notification.addRange(name.Notification);
-
-            return role;
+            return Role.Create(
+                RoleName.Create(RoleType.Manager),
+                 "Responsável pelo controle de fluxo, execução de check-in, check-out e monitoramento de acessos em tempo real.");
         }
 
         public static Role Security()
         {
-            var name = RoleName.Create(RoleType.Visitor);
-            var role = Role.Create(name);
-
-            role._notification.addRange(name.Notification);
-
-            return role;
+            return Role.Create(
+                RoleName.Create(RoleType.Security),
+                 "Acesso total ao sistema, com poderes para gerenciar usuários, configurar roles, extrair relatórios e auditar logs");
         }
     }
 }

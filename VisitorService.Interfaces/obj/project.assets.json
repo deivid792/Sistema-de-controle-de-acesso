@@ -1297,7 +1297,7 @@
           "bin/placeholder/VisitorService.Domain.dll": {}
         }
       },
-      "VisitorService.Infrastructure/1.0.0": {
+      "VisitorService.infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
@@ -1312,10 +1312,10 @@
           "VisitorService.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/VisitorService.Infrastructure.dll": {}
+          "bin/placeholder/VisitorService.infrastructure.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VisitorService.Infrastructure.dll": {}
+          "bin/placeholder/VisitorService.infrastructure.dll": {}
         }
       }
     }
@@ -3962,10 +3962,10 @@
       "path": "../VisitorService.Domain/VisitorService.Domain.csproj",
       "msbuildProject": "../VisitorService.Domain/VisitorService.Domain.csproj"
     },
-    "VisitorService.Infrastructure/1.0.0": {
+    "VisitorService.infrastructure/1.0.0": {
       "type": "project",
-      "path": "../VisitorService.Infrastructure/VisitorService.Infrastructure.csproj",
-      "msbuildProject": "../VisitorService.Infrastructure/VisitorService.Infrastructure.csproj"
+      "path": "../VisitorService.Infrastructure/VisitorService.infrastructure.csproj",
+      "msbuildProject": "../VisitorService.Infrastructure/VisitorService.infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3975,7 +3975,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 9.0.1",
       "Swashbuckle.AspNetCore >= 9.0.4",
       "VisitorService.Application >= 1.0.0",
-      "VisitorService.Infrastructure >= 1.0.0"
+      "VisitorService.infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4014,8 +4014,8 @@
             "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj": {
               "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj"
             },
-            "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj"
+            "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
+              "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj"
             }
           }
         }

@@ -7,6 +7,19 @@
 
 ---
 
+## 🛠 Status do Projeto
+Este projeto está em **desenvolvimento ativo**. Atualmente, estou focado na camada de Infraestrutura e Domínio.
+
+- [x] Refatoração de Entidades (Design by Contracts)
+- [x] Migração para EntityTypeConfiguration (Fluent API)
+- [x] Configuração de Relacionamentos Many-to-Many
+- [x] Configuração de Relacionamentos One-to-Many
+- [ ] Implementação de Authentication/JWT
+- [ ] Implementação de Cache
+- [x] Unit Tests (xUnit)
+
+---
+
 ## 📌 Descrição do Projeto
 
 Esta aplicação foi desenvolvida pelo Squad 10 como proposta da Residência On-Board do Porto Digital em parceria com o Arco Mix.

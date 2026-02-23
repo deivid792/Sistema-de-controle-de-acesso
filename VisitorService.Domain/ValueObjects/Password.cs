@@ -1,58 +1,33 @@
-using System.Text.RegularExpressions;
 using VisitorService.Domain.Shared;
 
 namespace VisitorService.Domain.ValueObject
 {
 
-    public class Password
+    public class Password : Notifiable
     {
-        public string Value { get; }
-        private readonly Notification _notification = new();
-        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
-        public bool HasErrors => _notification.HasErrors;
-        private Password(string value)
-        {
-            Value = value;
-        }
+        public string? Value { get; }
+
+        private Password(string? value) => Value = value;
 
         public static Password Create(string value)
         {
-            var tempPassword = new Password(value);
-            var notification = tempPassword._notification;
+            var normalized = value?.Trim() ?? string.Empty;
 
-            if (string.IsNullOrWhiteSpace(value))
+            var contract = new Contract()
+                .IsNotNullOrWhiteSpace(normalized, "Password")
+                .MinLength(normalized, 8 , "Password")
+                .MaxLength(normalized, 20 , "Password")
+                .IsStrongPassword(normalized, "Password")
+                .HasNoSpaces(normalized, "Password");
+
+            var password = new Password(normalized);
+
+            if (contract.HasErrors)
             {
-                notification.add("Password", "A senha não pode estar vazia ou apenas espaços");
-                return tempPassword;
+                password.AddRangeNotification(contract.Errors);
             }
 
-            var normalized = tempPassword.Value.Trim();
-
-            if (normalized.Length < 8)
-                notification.add("Password", "A senha deve conter pelo menos 8 caracteres");
-
-            if (normalized.Length > 12)
-                notification.add("Password", "A senha não deve exceder 12 caracteres");
-
-            if (!Regex.IsMatch(normalized, "[A-Z]"))
-                notification.add("Password", "A senha deve conter pelo menos uma letra maiúscula");
-
-            if (!Regex.IsMatch(normalized, "[a-z]"))
-                notification.add("Password", "A senha deve conter pelo menos uma letra minúscula");
-
-            if (!Regex.IsMatch(normalized, "[0-9]"))
-                notification.add("Password", "A senha deve conter pelo menos um número");
-
-            if (!Regex.IsMatch(normalized, "[!@#$%^&*(),.?\":{}|<>]"))
-                notification.add("Password", "A senha deve conter pelo menos um caractere especial");
-
-            if (normalized.Contains(" "))
-                notification.add("Password", "A senha não deve conter espaços em branco no meio");
-
-            if (notification.HasErrors)
-                return tempPassword;
-
-            return new Password(normalized);
+            return password;
         }
 
         public static Password FromHash(string value)

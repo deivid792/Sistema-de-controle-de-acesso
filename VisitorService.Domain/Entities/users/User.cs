@@ -3,9 +3,8 @@ using VisitorService.Domain.ValueObject;
 
 namespace VisitorService.Domain.Entities
 {
-    public sealed class User
+    public sealed class User : BaseEntity
     {
-        public Guid Id { get; private set; }
         public Name Name { get; private set; } = default!;
         public Email Email { get; private set; } = default!;
         public Password Password { get; private set; } = default!;
@@ -15,26 +14,21 @@ namespace VisitorService.Domain.Entities
         public Guid? CreatedByUserId { get; private set; }
         public string? CreatedByUserName { get; private set; }
 
-        private readonly Notification _notification = new();
-        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
-        public bool HasErrors => _notification.HasErrors;
-
-        private readonly List<UserRole> _userRoles = new();
+        private readonly List<Role> _Roles = new();
         private readonly List<ValidationToken> _validationTokens = new();
         private readonly List<Visit> _visits = new();
         private readonly List<RefreshToken> _refreshTokens = new();
 
-        public IReadOnlyCollection<UserRole> UserRoles => _userRoles.AsReadOnly();
+        public IReadOnlyCollection<Role> Roles => _Roles.AsReadOnly();
         public IReadOnlyCollection<ValidationToken> ValidationTokens => _validationTokens.AsReadOnly();
         public IReadOnlyCollection<Visit> Visits => _visits.AsReadOnly();
         public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
 
-        private User() { }
+        private User()  : base() { }
 
-        private User(Name name, Email email, Password password, Phone? phone, string? company, Cnpj? cnpj)
+        private User(Name name, Email email, Password password, Phone? phone, string? company, Cnpj? cnpj) : base()
         {
-            Id = Guid.NewGuid();
             Name = name;
             Email = email;
             Password = password;
@@ -42,37 +36,40 @@ namespace VisitorService.Domain.Entities
             Company = company;
             Cnpj = cnpj;
 
-            _notification.addRange(name.Notification);
-            _notification.addRange(email.Notification);
-            _notification.addRange(password.Notification);
+            name.AddRangeNotification(name.Errors);
+            email.AddRangeNotification(email.Errors);
+            password.AddRangeNotification(password.Errors);
 
             if (phone != null)
-                _notification.addRange(phone.Notification);
+                AddRangeNotification(phone.Errors);
 
             if (cnpj != null)
-                _notification.addRange(cnpj.Notification);
+                AddRangeNotification(cnpj.Errors);
         }
 
         public static User Create(Name name, Email email, Password password, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
         {
             var user = new User(name, email, password, phone, company, cnpj);
 
+            var usuario = user.Name.Value;
+
             return user;
+
         }
 
         public void UpdateData(Name name, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
         {
-            _notification.Clear();
+            NotificationClear();
 
-            _notification.addRange(name.Notification);
+            AddRangeNotification(name.Errors);
 
             if (phone != null)
-                _notification.addRange(phone.Notification);
+                AddRangeNotification(phone.Errors);
 
             if (cnpj != null)
-                _notification.addRange(cnpj.Notification);
+                AddRangeNotification(cnpj.Errors);
 
-            if (_notification.HasErrors)
+            if (HasErrors)
                 return;
 
             Name = name;
@@ -82,26 +79,19 @@ namespace VisitorService.Domain.Entities
         }
         public void AddRole(Role role)
         {
-            if (role == null)
+            foreach (var userRole in Roles)
             {
-                _notification.add("User.AddRole", "Role não pode ser nula.");
-                return;
-            }
+                if (userRole.Id == role!.Id)
+                    AddNotification("User.AddRole", "O usuário ja possui essa role.");
+            };
 
-            foreach (var userRole in UserRoles)
-            {
-                if (userRole.RoleId == role!.Id)
-                    _notification.add("User.AddRole", "O usuário ja possui essa role.");
-            }
-
-            var newUserRole = new UserRole(this, role!);
-            _userRoles.Add(newUserRole);
+            _Roles.Add(role);
         }
 
-        public void RemoveRole(UserRole role)
+        public void RemoveRole(Role role)
         {
-            if (_userRoles.Contains(role))
-                _userRoles.Remove(role);
+            if (_Roles.Contains(role))
+                _Roles.Remove(role);
         }
 
         public void AddRefreshToken(RefreshToken token)
@@ -119,7 +109,7 @@ namespace VisitorService.Domain.Entities
         {
             if (date < DateOnly.FromDateTime(DateTime.Today))
             {
-                _notification.add("Visit.Date", "A visita não pode ser no passado.");
+                AddNotification("Visit.Date", "A visita não pode ser no passado.");
                 return;
             }
 
@@ -127,8 +117,8 @@ namespace VisitorService.Domain.Entities
 
             if (visit.HasErrors)
             {
-                foreach (var item in visit.Notification)
-                    _notification.add(item.Key, item.Message);
+                foreach (var item in visit.Errors)
+                    AddNotification(item.Key, item.Message);
 
                 return;
             }

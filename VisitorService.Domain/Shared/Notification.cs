@@ -1,6 +1,6 @@
 namespace VisitorService.Domain.Shared
 {
-    public sealed class Notification
+    public abstract class Notifiable
     {
         private readonly List<NotificationItem> _erros = new();
 
@@ -8,18 +8,18 @@ namespace VisitorService.Domain.Shared
 
         public IReadOnlyCollection<NotificationItem> Errors => _erros.AsReadOnly();
 
-        public void add(string key, string message)
+        public void AddNotification(string key, string message)
         {
             if (!string.IsNullOrWhiteSpace(message))
                 _erros.Add(new NotificationItem(key, message));
         }
 
-        public void addRange(IEnumerable<NotificationItem> itens)
+        public void AddRangeNotification(IEnumerable<NotificationItem> itens)
         {
             _erros.AddRange(itens);
         }
 
-        public void Clear()
+        public void NotificationClear()
         {
             _erros.Clear();
         }

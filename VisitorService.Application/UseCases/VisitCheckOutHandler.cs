@@ -25,7 +25,7 @@ namespace VisitorService.Application.UseCases
         visit.CheckOutVisit();
 
         if (visit.HasErrors)
-            return Result<Visit>.Fail(visit.Notification);
+            return Result<Visit>.Fail(visit.Errors);
 
         await _visitRepo.UpdateAsync(visit);
 

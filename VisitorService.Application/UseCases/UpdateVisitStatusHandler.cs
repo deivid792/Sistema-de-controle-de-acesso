@@ -30,7 +30,7 @@ namespace VisitorService.Application.UseCases
         if (gestor == null)
             return Result<Visit>.Fail("Usuário não encontrado.");
 
-        if (!gestor.UserRoles.Any(r => r.Role.Name.Value == RoleType.Manager))
+        if (!gestor.Roles.Any(r => r.Name.Value == RoleType.Manager))
             return Result<Visit>.Fail("Apenas gestores podem aprovar ou rejeitar visitas.");
 
         var visit = await _visitRepository.GetByIdAsync(dto.VisitId);
@@ -41,7 +41,7 @@ namespace VisitorService.Application.UseCases
         visit.UpdateStatus(dto.Status);
 
         if (visit.HasErrors)
-            return Result<Visit>.Fail(visit.Notification);
+            return Result<Visit>.Fail(visit.Errors);
 
         await _visitRepository.UpdateAsync(visit);
 

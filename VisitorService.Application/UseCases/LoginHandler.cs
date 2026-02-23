@@ -36,7 +36,7 @@ namespace VisitorService.Application.UseCases
         if (!ok)
             return Result<AuthResultDto>.Fail("Credenciais inválidas.");
 
-        var roles = user.UserRoles?.Select(ur => ur.Role.Name.ToString()) ?? Enumerable.Empty<string>();
+        var roles = user.Roles?.Select(ur => ur.Name.ToString()) ?? Enumerable.Empty<string>();
 
         var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value, roles!);
 

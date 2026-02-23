@@ -2,9 +2,8 @@ using VisitorService.Domain.Shared;
 
 namespace VisitorService.Domain.Entities
 {
-    public sealed class Visit
+    public sealed class Visit : BaseEntity
     {
-        public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
         public DateOnly Date { get; private set; }
         public TimeOnly Time { get; private set; }
@@ -16,15 +15,11 @@ namespace VisitorService.Domain.Entities
 
         public User User { get; private set; } = default!;
         public ICollection<VisitHistory> VisitHistories { get; private set; } = new List<VisitHistory>();
-        private readonly Notification _notification = new();
-        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
-        public bool HasErrors => _notification.HasErrors;
 
-        private Visit() { }
+        private Visit() : base() { }
 
-        public Visit(User user, DateOnly date, TimeOnly time, string reason, string category, string status)
+        public Visit(User user, DateOnly date, TimeOnly time, string reason, string category, string status) : base()
         {
-            Id = Guid.NewGuid();
             User = user;
             UserId = user.Id;
             Date = date;
@@ -38,7 +33,7 @@ namespace VisitorService.Domain.Entities
         {
             if (newStatus != "Aprovada" && newStatus != "Rejeitada")
             {
-                _notification.add("Visit.Status", "Status inválido.");
+                AddNotification("Visit.Status", "Status inválido.");
                 return;
             }
 
@@ -49,13 +44,13 @@ namespace VisitorService.Domain.Entities
         {
             if (Status != "Aprovada")
             {
-                _notification.add("Visit.CheckIn", "Somente visitas aprovadas podem fazer check-in.");
+                AddNotification("Visit.CheckIn", "Somente visitas aprovadas podem fazer check-in.");
                 return;
             }
 
             if (CheckIn is not null)
             {
-                _notification.add("Visit.CheckIn", "Check-in já realizado.");
+                AddNotification("Visit.CheckIn", "Check-in já realizado.");
                 return;
             }
 
@@ -68,13 +63,13 @@ namespace VisitorService.Domain.Entities
         {
             if (CheckIn is null)
             {
-                _notification.add("Visit.CheckOut", "A visita ainda não fez check-in.");
+                AddNotification("Visit.CheckOut", "A visita ainda não fez check-in.");
                 return;
             }
 
             if (CheckOut is not null)
             {
-                _notification.add("Visit.CheckOut", "Check-out já realizado.");
+                AddNotification("Visit.CheckOut", "Check-out já realizado.");
                 return;
             }
 

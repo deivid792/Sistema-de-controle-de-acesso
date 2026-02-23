@@ -1608,7 +1608,7 @@
           "bin/placeholder/VisitorService.Domain.dll": {}
         }
       },
-      "VisitorService.Infrastructure/1.0.0": {
+      "VisitorService.infrastructure/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
@@ -1623,10 +1623,10 @@
           "VisitorService.Domain": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/VisitorService.Infrastructure.dll": {}
+          "bin/placeholder/VisitorService.infrastructure.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VisitorService.Infrastructure.dll": {}
+          "bin/placeholder/VisitorService.infrastructure.dll": {}
         }
       },
       "VisitorService.Interfaces/1.0.0": {
@@ -1637,7 +1637,7 @@
           "Microsoft.AspNetCore.OpenApi": "9.0.7",
           "Swashbuckle.AspNetCore": "9.0.4",
           "VisitorService.Application": "1.0.0",
-          "VisitorService.Infrastructure": "1.0.0"
+          "VisitorService.infrastructure": "1.0.0"
         },
         "compile": {
           "bin/placeholder/VisitorService.Interfaces.dll": {}
@@ -4060,10 +4060,10 @@
       "path": "../VisitorService.Domain/VisitorService.Domain.csproj",
       "msbuildProject": "../VisitorService.Domain/VisitorService.Domain.csproj"
     },
-    "VisitorService.Infrastructure/1.0.0": {
+    "VisitorService.infrastructure/1.0.0": {
       "type": "project",
-      "path": "../VisitorService.Infrastructure/VisitorService.Infrastructure.csproj",
-      "msbuildProject": "../VisitorService.Infrastructure/VisitorService.Infrastructure.csproj"
+      "path": "../VisitorService.Infrastructure/VisitorService.infrastructure.csproj",
+      "msbuildProject": "../VisitorService.Infrastructure/VisitorService.infrastructure.csproj"
     },
     "VisitorService.Interfaces/1.0.0": {
       "type": "project",
@@ -4080,8 +4080,8 @@
       "Moq >= 4.20.72",
       "VisitorService.Application >= 1.0.0",
       "VisitorService.Domain >= 1.0.0",
-      "VisitorService.Infrastructure >= 1.0.0",
       "VisitorService.Interfaces >= 1.0.0",
+      "VisitorService.infrastructure >= 1.0.0",
       "coverlet.collector >= 6.0.2",
       "xunit >= 2.9.2",
       "xunit.runner.visualstudio >= 2.8.2"
@@ -4126,8 +4126,8 @@
             "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Domain\\VisitorService.Domain.csproj": {
               "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Domain\\VisitorService.Domain.csproj"
             },
-            "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj"
+            "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
+              "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj"
             },
             "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Interfaces\\VisitorService.Interfaces.csproj": {
               "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Interfaces\\VisitorService.Interfaces.csproj"

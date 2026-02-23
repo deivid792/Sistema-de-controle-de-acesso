@@ -26,11 +26,11 @@ namespace VisitorService.Application.UseCases
         {
             var nameResult = Name.Create(command.Name);
             if (nameResult.HasErrors)
-                return Result.Fail(nameResult.Notification);
+                return Result.Fail(nameResult.Errors);
 
             var emailResult = Email.Create(command.Email);
             if (emailResult.HasErrors)
-                return Result.Fail(emailResult.Notification);
+                return Result.Fail(emailResult.Errors);
 
             var existing = await _userRepo.GetByEmailAsync(emailResult.Value!);
             if (existing is not null)
@@ -38,7 +38,7 @@ namespace VisitorService.Application.UseCases
 
             var password = Password.Create(command.Password);
             if (password.HasErrors)
-                return Result.Fail(password.Notification!);
+                return Result.Fail(password.Errors!);
             var hashResult = _passwordService.Hash(password.Value);
 
             var passwordVo = hashResult;
@@ -48,7 +48,7 @@ namespace VisitorService.Application.UseCases
             {
                 var phoneRes = Phone.Create(command.Phone);
                 if (phoneRes.HasErrors)
-                    return Result.Fail(phoneRes.Notification);
+                    return Result.Fail(phoneRes.Errors);
                 phoneVo = phoneRes;
             }
 
@@ -57,7 +57,7 @@ namespace VisitorService.Application.UseCases
             {
                 var cnpjRes = Cnpj.Create(command.Cnpj);
                 if (cnpjRes.HasErrors)
-                    return Result.Fail(cnpjRes.Notification);
+                    return Result.Fail(cnpjRes.Errors);
                 cnpjVo = cnpjRes;
             }
 
@@ -71,7 +71,7 @@ namespace VisitorService.Application.UseCases
             );
 
             if (userResult.HasErrors)
-                return Result.Fail(userResult.Notification!);
+                return Result.Fail(userResult.Errors!);
 
             var user = userResult;
 

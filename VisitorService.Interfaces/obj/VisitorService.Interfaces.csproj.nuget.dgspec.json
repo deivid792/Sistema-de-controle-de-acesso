@@ -156,12 +156,12 @@
         }
       }
     },
-    "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
+    "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj",
-        "projectName": "VisitorService.Infrastructure",
-        "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj",
+        "projectName": "VisitorService.infrastructure",
+        "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj",
         "packagesPath": "C:\\Users\\deivi\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
@@ -297,8 +297,8 @@
               "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj": {
                 "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Application\\VisitorService.Application.csproj"
               },
-              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.Infrastructure.csproj"
+              "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj": {
+                "projectPath": "C:\\Users\\deivi\\OneDrive\\Desktop\\VisitorService\\VisitorService.Infrastructure\\VisitorService.infrastructure.csproj"
               }
             }
           }

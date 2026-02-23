@@ -33,7 +33,7 @@ namespace VisitorService.Application.UseCases
             user.AddVisit(dto.Date, dto.Time, dto.Reason, dto.Category, "Pendente");
 
             if (user.HasErrors)
-                return Result<Visit>.Fail(user.Notification);
+                return Result<Visit>.Fail(user.Errors);
 
             var visit = user.Visits.Last();
 

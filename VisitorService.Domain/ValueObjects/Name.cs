@@ -2,43 +2,33 @@ using VisitorService.Domain.Shared;
 
 namespace VisitorService.Domain.ValueObject
 {
-    public sealed class Name
+    public sealed class Name : Notifiable
     {
-        public string Value { get; }
-        private readonly Notification _notification = new();
-        public IReadOnlyCollection<NotificationItem> Notification => _notification.Errors;
-        public bool HasErrors => _notification.HasErrors;
-        private Name(string value)
+        public string? Value { get; private set; }
+
+        private Name() { }
+        private Name(string? value) => Value = value;
+
+        public static Name Create(string? value)
         {
-            Value = value;
+            var normalized = value?.Trim() ?? string.Empty;
+
+            var contract = new Contract()
+            .Requires()
+            .IsNotNullOrWhiteSpace(normalized, "Name")
+            .MinLength(normalized, 2, "Name")
+            .MaxLength(normalized, 100, "Name");
+
+            var name = new Name(normalized);
+
+            if (contract.HasErrors)
+                name.AddRangeNotification(contract.Errors);
+
+            return name;
         }
 
-        public static Name Create(string value)
-        {
-            var tempName = new Name(value);
-            var notification = tempName._notification;
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                notification.add("Name", "O nome não pode ser vazio ou apenas espaços");
-                return tempName;
-            }
-            var normalized = tempName.Value.Trim();
-
-            if (normalized.Length < 2)
-                notification.add("Name", "O nome deve ter pelo menos 2 caracteres.");
-
-            if (normalized.Length > 100)
-                notification.add("Name", "O nome deve ter no máximo 100 caracteres.");
-
-            if (notification.HasErrors)
-                return tempName;
-
-            return new Name(normalized);
-        }
-
-        public static Name FromDatabase(string value)
-            => new Name(value);
+        [Obsolete("Use apenas para mapeamento do EF Core. Para criar novos nomes, use Name.Create().", false)]
+        public static Name FromDatabase(string? value) => new Name(value);
 
     }
 }
