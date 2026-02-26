@@ -69,7 +69,11 @@ public class UserMapping : IEntityTypeConfiguration<User>
             i.Property("RolesId").HasColumnName("RoleId");
             i.Property("UsersId").HasColumnName("UserId");
         });
-    } 
+
+        builder.HasMany(u => u.Visits)
+        .WithOne(V => V.User)
+        .HasForeignKey(v => v.UserId);
+    }
 
 
 }

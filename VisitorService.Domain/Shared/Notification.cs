@@ -4,7 +4,7 @@ namespace VisitorService.Domain.Shared
     {
         private readonly List<NotificationItem> _erros = new();
 
-        public bool HasErrors => _erros.Count > 0;
+        public bool HasErrors => _erros.Any();
 
         public IReadOnlyCollection<NotificationItem> Errors => _erros.AsReadOnly();
 

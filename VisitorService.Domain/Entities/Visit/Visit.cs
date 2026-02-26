@@ -7,18 +7,17 @@ namespace VisitorService.Domain.Entities
         public Guid UserId { get; private set; }
         public DateOnly Date { get; private set; }
         public TimeOnly Time { get; private set; }
-        public string Reason { get; private set; } = default!;
-        public string Category { get; private set; } = default!;
-        public string Status { get; private set; } = default!;
+        public string? Reason { get; private set; } = default!;
+        public string? Category { get; private set; } = default!;
+        public string? Status { get; private set; } = default!;
         public DateTime? CheckIn { get; private set; }
         public DateTime? CheckOut { get; private set; }
 
         public User User { get; private set; } = default!;
-        public ICollection<VisitHistory> VisitHistories { get; private set; } = new List<VisitHistory>();
 
         private Visit() : base() { }
 
-        public Visit(User user, DateOnly date, TimeOnly time, string reason, string category, string status) : base()
+        private Visit(User user, DateOnly date, TimeOnly time, string? reason, string category, string status) : base()
         {
             User = user;
             UserId = user.Id;
@@ -27,6 +26,29 @@ namespace VisitorService.Domain.Entities
             Reason = reason;
             Category = category;
             Status = status;
+        }
+
+        public static Visit Create(User user, DateOnly date, TimeOnly time, string reason, string category, string status )
+        {
+            var reasonNoralized = reason?.Trim() ?? string.Empty;
+            var categoryNoralized = category?.Trim() ?? string.Empty;
+
+            var contract = new Contract()
+            .Requires()
+            .IsNotNullOrWhiteSpaceList("Visit", [reasonNoralized,categoryNoralized])
+            .MaxLengthList( [reasonNoralized, categoryNoralized], 50, "Visit")
+            .IsNotNullOrWhiteSpaceList("Visit", [date])
+            .IsGreaterOrEqualsThan("Visit", date)
+            .IsNotNullOrWhiteSpaceList("Visit", [time]);
+
+
+            var visit = new Visit(user, date, time, reasonNoralized, categoryNoralized, status );
+
+            if (contract.HasErrors)
+            {
+                visit.User.AddRangeNotification(contract.Errors);
+            }
+            return visit;
         }
 
         public void UpdateStatus(string newStatus)

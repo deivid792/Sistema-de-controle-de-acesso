@@ -107,21 +107,10 @@ namespace VisitorService.Domain.Entities
 
         public void AddVisit(DateOnly date, TimeOnly time, string reason, string category, string status)
         {
-            if (date < DateOnly.FromDateTime(DateTime.Today))
-            {
-                AddNotification("Visit.Date", "A visita não pode ser no passado.");
-                return;
-            }
-
-            var visit = new Visit(this, date, time, category, reason, status);
+            var visit = Visit.Create(this, date, time, category, reason, status);
 
             if (visit.HasErrors)
-            {
-                foreach (var item in visit.Errors)
-                    AddNotification(item.Key, item.Message);
-
-                return;
-            }
+                this.AddRangeNotification(visit.Errors);
 
             _visits.Add(visit);
         }

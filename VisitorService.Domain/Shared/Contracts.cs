@@ -15,11 +15,23 @@ public sealed class Contract : Notifiable
         return this;
     }
 
-    public Contract IsNotNullOrWhiteSpace(string? value, string key)
+    public Contract IsNotNullOrWhiteSpace(string key, string? value)
     {
         if(string.IsNullOrWhiteSpace(value))
         AddNotification(key, "O valor não pode ser nulo ou ter espaços em branco.");
 
+        return this;
+    }
+
+    public Contract IsNotNullOrWhiteSpaceList<T>(string Key , IEnumerable<T> values)
+    {
+        foreach(var value in values)
+        {
+            if (string.IsNullOrWhiteSpace(value?.ToString()))
+            {
+                AddNotification(Key, $"O campo {value} não pode ser nulo ou ter espaços em branco ");
+            }
+        }
         return this;
     }
 
@@ -37,6 +49,18 @@ public sealed class Contract : Notifiable
             AddNotification(key, $"A quantidade máxima de caracteres é {max} ");
 
             return this;
+    }
+
+    public Contract MaxLengthList(IEnumerable<string> values,int max, string Key)
+    {
+        foreach (var value in values)
+        {
+            if (value.Length > max)
+            {
+                AddNotification(Key, "A quantidade máxima de caracteres é {max}");
+            }
+        }
+        return this;
     }
 
     public Contract HasLength(string? value, int equal, string key)
@@ -119,7 +143,7 @@ public sealed class Contract : Notifiable
     {
         if(!string.IsNullOrEmpty(value) && value.Contains(" "))
              AddNotification(key,"Não pode haver espaços em branco no meio");
-        
+
         return this;
     }
 
@@ -137,6 +161,14 @@ public sealed class Contract : Notifiable
         if((!string.IsNullOrEmpty(value)) && (value.Length < 10 || value.Length > 13))
             AddNotification(key, "O número de telefone deve ter entre 10 e 13 dígitos.");
 
+        return this;
+    }
+    public Contract IsGreaterOrEqualsThan(string Key, DateOnly date)
+    {
+        if(date < DateOnly.FromDateTime(DateTime.Today))
+        {
+            AddNotification(Key,$"{date} A visita não pode ser no passado.");
+        }
         return this;
     }
 }

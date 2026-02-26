@@ -14,6 +14,7 @@ namespace VisitorService.Infrastructure.Context
 
         public DbSet<User> Users => Set<User>();
         public DbSet<Role> Roles => Set<Role>();
+        public DbSet<Visit> Visits => Set<Visit>();
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
