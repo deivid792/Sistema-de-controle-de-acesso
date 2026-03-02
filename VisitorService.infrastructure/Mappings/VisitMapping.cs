@@ -21,7 +21,7 @@ public class VisitMapping : IEntityTypeConfiguration<Visit>
         .IsRequired();
 
         builder.Property(v => v.Reason)
-        .HasColumnName("Rearson")
+        .HasColumnName("Reason")
         .HasMaxLength(50)
         .IsRequired();
 
@@ -36,12 +36,10 @@ public class VisitMapping : IEntityTypeConfiguration<Visit>
         .IsRequired();
 
         builder.Property(v => v.CheckIn)
-        .HasColumnType("DATETIME2(0)")
-        .IsRequired();
+        .HasColumnType("DATETIME2(0)");
 
         builder.Property(v => v.CheckOut)
-        .HasColumnType("DATETIME2(0)")
-        .IsRequired();
+        .HasColumnType("DATETIME2(0)");
 
         builder.ToTable("Visits", b => b.IsTemporal());
     }

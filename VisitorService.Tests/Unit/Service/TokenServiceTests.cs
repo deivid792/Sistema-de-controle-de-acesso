@@ -33,7 +33,6 @@ namespace VisitorService.Tests.Services
         [Fact]
         public void GenerateAccessToken_ShouldReturn_ValidJwtToken()
         {
-            // Arrange
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, "123"),

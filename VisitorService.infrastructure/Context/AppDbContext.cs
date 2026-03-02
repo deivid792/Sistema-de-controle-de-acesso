@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Shared;
-using VisitorService.Domain.ValueObjects;
-using VisitorService.Domain.Enums;
 using VisitorService.Infrastructure.Mappings;
 
 namespace VisitorService.Infrastructure.Context
@@ -25,15 +23,13 @@ namespace VisitorService.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<NotificationItem>();
-
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes()){
-                modelBuilder.Entity(entityType.ClrType).Ignore("Notifications");
-                modelBuilder.Entity(entityType.ClrType).Ignore("IsValid");
-            }
+            modelBuilder.Ignore<Notifiable>();
 
             modelBuilder.ApplyConfiguration(new UserMapping());
 
             modelBuilder.ApplyConfiguration(new RoleMapping());
+
+            modelBuilder.ApplyConfiguration(new VisitMapping());
 
             base.OnModelCreating(modelBuilder);
         }

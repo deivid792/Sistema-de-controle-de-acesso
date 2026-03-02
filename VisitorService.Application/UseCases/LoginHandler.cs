@@ -24,11 +24,7 @@ namespace VisitorService.Application.UseCases
 
     public async Task<Result<AuthResultDto>> Handle(LoginCommand command)
     {
-        var emailResult = Email.Create(command.Email);
-        if (emailResult.HasErrors)
-            return Result<AuthResultDto>.Fail("Email inválido");
-
-        var user = await _userRepo.GetByEmailAsync(emailResult.Value!);
+        var user = await _userRepo.GetByEmailAsync(command.Email);
         if (user is null)
             return Result<AuthResultDto>.Fail("Credenciais inválidas.");
 
@@ -38,7 +34,7 @@ namespace VisitorService.Application.UseCases
 
         var roles = user.Roles?.Select(ur => ur.Name.ToString()) ?? Enumerable.Empty<string>();
 
-        var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value, roles!);
+        var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value!, roles!);
 
         var dto = new AuthResultDto
         {

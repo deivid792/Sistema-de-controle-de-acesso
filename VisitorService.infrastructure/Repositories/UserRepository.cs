@@ -18,7 +18,7 @@ namespace VisitorService.Infrastructure.Repositories
         public async Task<User?> GetByIdAsync(Guid id)
         {
             return await _context.Users
-                .Include(u => u.UserRoles)
+                .Include(u => u.Roles)
                 .Include(u => u.Visits)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
@@ -28,19 +28,18 @@ namespace VisitorService.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(email))
                 return null;
 
-            var emailVo = Email.Create(email);
+            var normalizedEmail = email.Trim().ToLower();
 
             return await _context.Users
                 .AsNoTracking()
-                .Include(u => u.UserRoles)
-                .FirstOrDefaultAsync(u => u.Email.Value == emailVo.Value);
-
-
+                .Include(u => u.Roles)
+                .FirstOrDefaultAsync(u => u.Email.Value == normalizedEmail);
         }
 
         public async Task AddAsync(User user)
         {
             await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(User user)

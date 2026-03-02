@@ -46,7 +46,7 @@ namespace VisitorService.Application.UseCases
         await _visitRepository.UpdateAsync(visit);
 
         await _emailService.SendAsync(
-            visit.User.Email.Value,
+            visit.User.Email.Value!,
             "Atualização da sua visita",
             $"Sua visita foi marcada como '{visit.Status}'."
         );

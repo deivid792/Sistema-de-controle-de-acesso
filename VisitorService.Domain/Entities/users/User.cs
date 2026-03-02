@@ -35,23 +35,21 @@ namespace VisitorService.Domain.Entities
             Phone = phone;
             Company = company;
             Cnpj = cnpj;
-
-            name.AddRangeNotification(name.Errors);
-            email.AddRangeNotification(email.Errors);
-            password.AddRangeNotification(password.Errors);
-
-            if (phone != null)
-                AddRangeNotification(phone.Errors);
-
-            if (cnpj != null)
-                AddRangeNotification(cnpj.Errors);
         }
 
         public static User Create(Name name, Email email, Password password, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
         {
             var user = new User(name, email, password, phone, company, cnpj);
 
-            var usuario = user.Name.Value;
+            user.AddRangeNotification(name.Errors);
+            user.AddRangeNotification(email.Errors);
+            user.AddRangeNotification(password.Errors);
+
+            if (phone != null)
+                user.AddRangeNotification(phone.Errors);
+
+            if (cnpj != null)
+                user.AddRangeNotification(cnpj.Errors);
 
             return user;
 

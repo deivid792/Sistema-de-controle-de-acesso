@@ -19,27 +19,37 @@ namespace VisitorService.Application.UseCases
             _visitRepository = visitRepository;
         }
 
-        public async Task<Result<Visit>> Handler(CreateVisitDto dto)
+        public async Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitDto dto)
         {
             User? user = await _userRepository.GetByIdAsync(dto.UserId);
 
             if (user == null)
-                return Result<Visit>.Fail("O usuário não existe");
+                return Result<RegisterVisitResponseDto>.Fail("O usuário não existe");
 
             var Isthereaconflict = await _visitRepository.ExistsVisitInDateAndTime(dto.Date, dto.Time);
             if (Isthereaconflict)
-                return Result<Visit>.Fail("Esse horário já está reservado.");
+                return Result<RegisterVisitResponseDto>.Fail("Esse horário já está reservado.");
 
             user.AddVisit(dto.Date, dto.Time, dto.Reason, dto.Category, "Pendente");
 
             if (user.HasErrors)
-                return Result<Visit>.Fail(user.Errors);
+                return Result<RegisterVisitResponseDto>.Fail(user.Errors);
 
             var visit = user.Visits.Last();
 
             await _userRepository.UpdateAsync(user);
 
-            return Result<Visit>.Success(visit);
+            var response = new RegisterVisitResponseDto
+            {
+                UserId = visit.UserId,
+                Date = visit.Date,
+                Time = visit.Time,
+                Reason = visit.Reason,
+                Category = visit.Category,
+                Status = visit.Status
+            };
+
+            return Result<RegisterVisitResponseDto>.Success(response);
         }
     }
 

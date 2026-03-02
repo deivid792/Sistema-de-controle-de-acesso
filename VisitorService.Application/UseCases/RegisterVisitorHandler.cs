@@ -39,7 +39,7 @@ namespace VisitorService.Application.UseCases
             var password = Password.Create(command.Password);
             if (password.HasErrors)
                 return Result.Fail(password.Errors!);
-            var hashResult = _passwordService.Hash(password.Value);
+            var hashResult = _passwordService.Hash(password.Value!);
 
             var passwordVo = hashResult;
 
@@ -61,7 +61,7 @@ namespace VisitorService.Application.UseCases
                 cnpjVo = cnpjRes;
             }
 
-            var userResult = User.Create(
+            var user = User.Create(
                 nameResult,
                 emailResult,
                 passwordVo,
@@ -70,10 +70,8 @@ namespace VisitorService.Application.UseCases
                 cnpjVo
             );
 
-            if (userResult.HasErrors)
-                return Result.Fail(userResult.Errors!);
-
-            var user = userResult;
+            if (user.HasErrors)
+                return Result.Fail(user.Errors!);
 
             var visitorRole = await _roleRepo.GetByRoleTypeAsync(RoleType.Visitor);
             if (visitorRole is null)

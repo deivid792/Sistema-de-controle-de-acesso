@@ -26,9 +26,9 @@ namespace VisitorService.Domain.Entities
         {
             var contract = new Contract()
             .Requires()
-            .IsNotNullOrWhiteSpace(description, "Role.Create")
-            .MinLength(description, 5, "Role.Create")
-            .MaxLength(description, 100, "Role.Create");
+            .IsNotNullOrWhiteSpace(description, "Role")
+            .MinLength(description, 5, "Role")
+            .MaxLength(description, 100, "Role");
 
             var role = new Role(name, description);
 
@@ -52,14 +52,14 @@ namespace VisitorService.Domain.Entities
         {
             return Role.Create(
                 RoleName.Create(RoleType.Manager),
-                 "Responsável pelo controle de fluxo, execução de check-in, check-out e monitoramento de acessos em tempo real.");
+                 "Acesso total ao sistema, com poderes para gerenciar usuários, configurar roles, extrair relatórios e auditar logs");
         }
 
         public static Role Security()
         {
             return Role.Create(
                 RoleName.Create(RoleType.Security),
-                 "Acesso total ao sistema, com poderes para gerenciar usuários, configurar roles, extrair relatórios e auditar logs");
+                 "Responsável pelo controle de fluxo, execução de check-in, check-out e monitoramento de acessos em tempo real.");
         }
     }
 }

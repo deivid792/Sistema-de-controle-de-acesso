@@ -23,7 +23,8 @@ builder.Services.AddControllers();
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=visitorservice.db"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<AppDbContext>();
 
 // Repositories
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();

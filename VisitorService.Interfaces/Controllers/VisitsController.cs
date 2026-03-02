@@ -7,7 +7,7 @@ using VisitorService.Interfaces.Extensions;
 namespace VisitorService.Interfaces.Controllers
 {
     [ApiController]
-    [Route("api/visits")]
+    [Route("api/[controller]")]
     public class VisitorController : ControllerBase
     {
         private readonly IUpdateVisitStatusHandler _updateVisitStatusHandler;
@@ -94,7 +94,7 @@ namespace VisitorService.Interfaces.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateVisit([FromBody] CreateVisitDto dto)
         {
