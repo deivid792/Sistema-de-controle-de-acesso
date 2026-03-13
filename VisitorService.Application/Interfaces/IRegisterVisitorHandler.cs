@@ -5,6 +5,6 @@ namespace VisitorService.Application.Interfaces
 {
     public interface IRegisterVisitorHandler
     {
-        Task<Result> Handle(RegisterVisitorCommand comand);
+        Task<Result<AuthResultDto>> Handle(RegisterVisitorCommand comand);
     }
 }

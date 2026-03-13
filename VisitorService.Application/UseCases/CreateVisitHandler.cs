@@ -19,9 +19,9 @@ namespace VisitorService.Application.UseCases
             _visitRepository = visitRepository;
         }
 
-        public async Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitDto dto)
+        public async Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitDto dto, Guid UserId)
         {
-            User? user = await _userRepository.GetByIdAsync(dto.UserId);
+            User? user = await _userRepository.GetByIdAsync(UserId);
 
             if (user == null)
                 return Result<RegisterVisitResponseDto>.Fail("O usuário não existe");

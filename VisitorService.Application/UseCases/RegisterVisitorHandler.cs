@@ -6,6 +6,8 @@ using VisitorService.Application.Interfaces;
 using VisitorService.Domain.Interfaces;
 using VisitorService.Application.Shared.results;
 using VisitorService.Domain.Services;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace VisitorService.Application.UseCases
 {
@@ -14,31 +16,36 @@ namespace VisitorService.Application.UseCases
         private readonly IUserRepository _userRepo;
         private readonly IRoleRepository _roleRepo;
         private readonly IPasswordService _passwordService;
+        private readonly ITokenService _tokenService;
+        private readonly IConfiguration _configuration;
 
-        public RegisterVisitorHandler(IUserRepository userRepo, IRoleRepository roleRepo, IPasswordService passwordService)
+        public RegisterVisitorHandler(IUserRepository userRepo, IRoleRepository roleRepo, IPasswordService passwordService, ITokenService tokenService,
+        IConfiguration configuration)
         {
             _userRepo = userRepo;
             _roleRepo = roleRepo;
             _passwordService = passwordService;
+            _tokenService = tokenService;
+            _configuration = configuration;
         }
 
-        public async Task<Result> Handle(RegisterVisitorCommand command)
+        public async Task<Result<AuthResultDto>> Handle(RegisterVisitorCommand command)
         {
             var nameResult = Name.Create(command.Name);
             if (nameResult.HasErrors)
-                return Result.Fail(nameResult.Errors);
+                return Result<AuthResultDto>.Fail(nameResult.Errors);
 
             var emailResult = Email.Create(command.Email);
             if (emailResult.HasErrors)
-                return Result.Fail(emailResult.Errors);
+                return Result<AuthResultDto>.Fail(emailResult.Errors);
 
             var existing = await _userRepo.GetByEmailAsync(emailResult.Value!);
             if (existing is not null)
-                return Result.Fail("E-mail já cadastrado.");
+                return Result<AuthResultDto>.Fail("E-mail já cadastrado.");
 
             var password = Password.Create(command.Password);
             if (password.HasErrors)
-                return Result.Fail(password.Errors!);
+                return Result<AuthResultDto>.Fail(password.Errors!);
             var hashResult = _passwordService.Hash(password.Value!);
 
             var passwordVo = hashResult;
@@ -48,7 +55,7 @@ namespace VisitorService.Application.UseCases
             {
                 var phoneRes = Phone.Create(command.Phone);
                 if (phoneRes.HasErrors)
-                    return Result.Fail(phoneRes.Errors);
+                    return Result<AuthResultDto>.Fail(phoneRes.Errors);
                 phoneVo = phoneRes;
             }
 
@@ -57,7 +64,7 @@ namespace VisitorService.Application.UseCases
             {
                 var cnpjRes = Cnpj.Create(command.Cnpj);
                 if (cnpjRes.HasErrors)
-                    return Result.Fail(cnpjRes.Errors);
+                    return Result<AuthResultDto>.Fail(cnpjRes.Errors);
                 cnpjVo = cnpjRes;
             }
 
@@ -71,17 +78,45 @@ namespace VisitorService.Application.UseCases
             );
 
             if (user.HasErrors)
-                return Result.Fail(user.Errors!);
+                return Result<AuthResultDto>.Fail(user.Errors!);
 
             var visitorRole = await _roleRepo.GetByRoleTypeAsync(RoleType.Visitor);
             if (visitorRole is null)
-                return Result.Fail("Role padrão 'Visitor' não está criada no sistema.");
+                return Result<AuthResultDto>.Fail("Role padrão 'Visitor' não está criada no sistema.");
 
             user.AddRole(visitorRole);
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email.Value!),
+                new Claim(ClaimTypes.Role, RoleType.Visitor.ToString())
+            };
+
+            var acessToken = _tokenService.GenerateAccessToken(claims);
+
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            var duration = _configuration.GetValue<int>("JWT:RefreshTokenValidityInDays");
+
+            user.AddRefreshToken(refreshToken, duration);
+
             await _userRepo.AddAsync(user);
 
-            return Result.Success();
+            var response = new AuthResultDto
+            {
+                AccessToken = acessToken,
+                RefeshToken = refreshToken,
+                ExpiresAccessTokenIn = DateTime.UtcNow.AddMinutes(15),
+                User = new UserResponseDto
+                {
+                    Name = user.Name.Value!,
+                    Email = user.Email.Value!,
+                    Role = RoleType.Visitor.ToString(),
+                }
+            };
+
+            return Result<AuthResultDto>.Success(response);
         }
     }
 }

@@ -2,7 +2,10 @@ namespace VisitorService.Application.DTOS
 {
     public class AuthResultDto
 {
-    public string Token { get; set; } = null!;
-    public DateTime ExpiresAt { get; set; }
+    public string AccessToken { get; set; } = null!;
+    public string RefeshToken { get; set; } = null!;
+    public DateTime ExpiresAccessTokenIn { get; set; }
+    public UserResponseDto User{ get; set; } = null!;
+
 }
 }

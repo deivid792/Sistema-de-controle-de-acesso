@@ -15,12 +15,10 @@ namespace VisitorService.Domain.Entities
         public string? CreatedByUserName { get; private set; }
 
         private readonly List<Role> _Roles = new();
-        private readonly List<ValidationToken> _validationTokens = new();
         private readonly List<Visit> _visits = new();
         private readonly List<RefreshToken> _refreshTokens = new();
 
         public IReadOnlyCollection<Role> Roles => _Roles.AsReadOnly();
-        public IReadOnlyCollection<ValidationToken> ValidationTokens => _validationTokens.AsReadOnly();
         public IReadOnlyCollection<Visit> Visits => _visits.AsReadOnly();
         public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
@@ -92,9 +90,10 @@ namespace VisitorService.Domain.Entities
                 _Roles.Remove(role);
         }
 
-        public void AddRefreshToken(RefreshToken token)
+        public void AddRefreshToken(string token, int daysToExpiry)
         {
-            _refreshTokens.Add(token);
+            var expirations = DateTime.UtcNow.AddDays(daysToExpiry);
+            _refreshTokens.Add(new RefreshToken(token, expirations));
         }
 
         public void SetCreatedBy(Guid managerId, string? managerName = null)

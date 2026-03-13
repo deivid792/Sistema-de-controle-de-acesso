@@ -93,12 +93,12 @@ namespace VisitorService.Interfaces.Controllers
 
             return Ok(result.Value);
         }
-
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateVisit([FromBody] CreateVisitDto dto)
         {
-            var result = await _createVisitHandler.Handler(dto);
+            Guid user = User.GetUserId();
+            var result = await _createVisitHandler.Handler(dto, user);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Errors);

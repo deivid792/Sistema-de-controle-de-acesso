@@ -1,10 +1,10 @@
-using System.Linq;
-using System.Threading.Tasks;
 using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.results;
-using VisitorService.Domain.ValueObject;
 using VisitorService.Domain.Services;
+using System.Security.Claims;
+using VisitorService.Domain.Enums;
+using Microsoft.Extensions.Configuration;
 
 
 namespace VisitorService.Application.UseCases
@@ -13,13 +13,15 @@ namespace VisitorService.Application.UseCases
 {
     private readonly IUserRepository _userRepo;
     private readonly IPasswordService _passwordService;
-    private readonly IAuthService _authService;
+    private readonly ITokenService _TokenService;
+    private readonly IConfiguration _configuration;
 
-    public LoginHandler(IUserRepository userRepo, IPasswordService passwordService, IAuthService authService)
+    public LoginHandler(IUserRepository userRepo, IPasswordService passwordService, ITokenService tokenService, IConfiguration configuration)
     {
         _userRepo = userRepo;
         _passwordService = passwordService;
-        _authService = authService;
+        _TokenService = tokenService;
+        _configuration = configuration;
     }
 
     public async Task<Result<AuthResultDto>> Handle(LoginCommand command)
@@ -34,12 +36,25 @@ namespace VisitorService.Application.UseCases
 
         var roles = user.Roles?.Select(ur => ur.Name.ToString()) ?? Enumerable.Empty<string>();
 
-        var token = await _authService.GenerateTokenAsync(user.Id, user.Email.Value!, roles!);
+        var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email.Value!),
+                new Claim(ClaimTypes.Role, RoleType.Visitor.ToString())
+            };
+
+        var accessToken =  _TokenService.GenerateAccessToken(claims);
+        var refreshToken = _TokenService.GenerateRefreshToken();
+
+        var duration = _configuration.GetValue<int>("JWT:RefreshTokenValidityInDays");
+
+        user.AddRefreshToken(refreshToken, duration);
 
         var dto = new AuthResultDto
         {
-            Token = token,
-            ExpiresAt = DateTime.UtcNow.AddHours(8)
+            AccessToken = accessToken,
+            RefeshToken = refreshToken,
+            ExpiresAccessTokenIn = DateTime.UtcNow.AddMinutes(15),
         };
 
         return Result<AuthResultDto>.Success(dto);

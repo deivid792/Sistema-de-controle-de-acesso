@@ -9,5 +9,13 @@ namespace VisitorService.Domain.Entities
 
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
+
+        public RefreshToken(string token, DateTime expiryDate)
+        {
+            Id = new Guid();
+            Token = token;
+            ExpiryDate = expiryDate;
+        }
     }
+
 }

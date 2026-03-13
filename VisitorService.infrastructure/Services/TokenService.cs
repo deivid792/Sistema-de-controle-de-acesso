@@ -20,7 +20,7 @@ namespace VisitorService.Infrastructure.Services
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)
         {
-            var key = _configuration.GetSection("JWT").GetValue<string>("secretkey") ??
+            var key = _configuration.GetSection("JWT").GetValue<string>("SecretKey") ??
             throw new InfrastructureException("Invalid secret Key");
             var privateKey = Encoding.UTF8.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -31,7 +31,7 @@ namespace VisitorService.Infrastructure.Services
                 Issuer = _configuration["JWT:ValidIssuer"],
                 Audience = _configuration["JWT:ValidAudience"],
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(privateKey), SecurityAlgorithms.HmacSha256Signature)
+                    new SymmetricSecurityKey(privateKey), SecurityAlgorithms.HmacSha256)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -49,7 +49,7 @@ namespace VisitorService.Infrastructure.Services
 
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            var key = _configuration.GetSection("JWT").GetValue<string>("secretkey") ??
+            var key = _configuration.GetSection("JWT").GetValue<string>("SecretKey") ??
             throw new InfrastructureException("Invalid secret Key");
             var privateKey = Encoding.UTF8.GetBytes(key);
             var tokenValidationParameters = new TokenValidationParameters

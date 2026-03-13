@@ -27,7 +27,7 @@ namespace VisitorService.Interfaces.Controllers
             if (!result.IsSuccess)
                 return BadRequest(new { error = result.Errors });
 
-            return Ok();
+            return Ok(result.Value);
         }
 
         [HttpPost("login")]
