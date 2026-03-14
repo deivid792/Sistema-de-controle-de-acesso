@@ -7,9 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitorService.Domain", "Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitorService.Application", "VisitorService.Application\VisitorService.Application.csproj", "{84BA2982-F7E3-435E-8D4A-6515D5B7A698}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisitorService.Infrastructure", "VisitorService.Infrastructure", "{DFEEB603-ED97-923B-AE17-DC935F488439}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitorService.infrastructure", "VisitorService.Infrastructure\VisitorService.infrastructure.csproj", "{B593B998-963D-4F84-B54E-DD1985A0EB2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitorService.Infrastructure", "VisitorService.Infrastructure\VisitorService.Infrastructure.csproj", "{B593B998-963D-4F84-B54E-DD1985A0EB2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisitorService.Interfaces", "VisitorService.Interfaces\VisitorService.Interfaces.csproj", "{91DE4E05-F404-431D-8740-E57B18828DFB}"
 EndProject
