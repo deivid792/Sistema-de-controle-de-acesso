@@ -12,7 +12,6 @@ public class AuthControllerTests
     [Fact]
     public async Task LoginRoute_Should_Return_200_When_Handler_Returns_Success()
     {
-        // Arrange
         var mockRegister = new Mock<IRegisterVisitorHandler>();
         var mockLogin = new Mock<IloginHandler>();
 
@@ -21,8 +20,8 @@ public class AuthControllerTests
             .ReturnsAsync(Result<AuthResultDto>.Success(
                 new AuthResultDto
                 {
-                    Token = "test-token",
-                    ExpiresAt = DateTime.UtcNow.AddHours(8)
+                    AccessToken = "test-token",
+                    ExpiresAccessTokenIn = DateTime.UtcNow.AddHours(8)
                 }
             ));
 
@@ -34,13 +33,11 @@ public class AuthControllerTests
             Password = "Senha123!"
         };
 
-        // Act
         var response = await controller.Login(command);
 
-        // Assert
         var ok = Assert.IsType<OkObjectResult>(response);
         var dto = Assert.IsType<AuthResultDto>(ok.Value);
 
-        Assert.Equal("test-token", dto.Token);
+        Assert.Equal("test-token", dto.AccessToken);
     }
 }

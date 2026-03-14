@@ -7,20 +7,21 @@ using VisitorService.Domain.Entities;
 using VisitorService.Domain.ValueObject;
 using Xunit;
 using VisitorService.Domain.Services;
+using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
 
 public class LoginHandlerTests
 {
     [Fact]
     public async Task Login_Should_Succeed_When_Credentials_Are_Valid()
     {
-        // Arrange
         var mockRepo = new Mock<IUserRepository>();
         var mockPassword = new Mock<IPasswordService>();
-        var mockAuth = new Mock<IAuthService>();
+        var mockAuth = new Mock<ITokenService>();
+        var mockConfig = new Mock<IConfiguration>();
 
         var email = Email.Create("test@example.com");
 
-        // simula o hash salvo no banco
         var storedHash = Password.FromHash("HASHFAKE123");
 
         var fakeUser = User.Create(
@@ -30,18 +31,25 @@ public class LoginHandlerTests
         );
 
         mockRepo
-            .Setup(r => r.GetByEmailAsync(email.Value))
+            .Setup(r => r.GetByEmailAsync(email.Value!))
             .ReturnsAsync(fakeUser);
 
         mockPassword
             .Setup(p => p.Verify(storedHash, "Senha123!"))
             .Returns(true);
 
-        mockAuth
-            .Setup(a => a.GenerateTokenAsync(fakeUser.Id, email.Value, It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync("fake-token-123");
+        var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, fakeUser.Id.ToString()),
+                new Claim(ClaimTypes.Email, email.Value!),
+                new Claim(ClaimTypes.Role, "Admin")
+            };
 
-        var handler = new LoginHandler(mockRepo.Object, mockPassword.Object, mockAuth.Object);
+        mockAuth
+            .Setup(a => a.GenerateAccessToken(It.IsAny<IEnumerable<Claim>>()))
+            .Returns("fake-token-123");
+
+        var handler = new LoginHandler(mockRepo.Object, mockPassword.Object, mockAuth.Object, mockConfig.Object);
 
         var command = new LoginCommand
         {
@@ -52,7 +60,7 @@ public class LoginHandlerTests
         var result = await handler.Handle(command);
 
         Assert.True(result.IsSuccess);
-        Assert.Equal("fake-token-123", result.Value.Token);
+        Assert.Equal("fake-token-123", result.Value!.AccessToken);
     }
 
 }
