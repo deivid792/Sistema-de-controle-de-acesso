@@ -7,7 +7,7 @@ public class PasswordTests
     public void Verify_AdminPassword_HashMatches()
     {
         string plainPassword = "Admin123";
-        string hash = "$2a$11$eWfJ7cek2y71rZPH7gtVueb5MhgPCXn4P0x7FwFjhvlShSYLJ7D9u";
+        string hash = BCrypt.Net.BCrypt.HashPassword(plainPassword);
 
         bool isMatch = BCrypt.Net.BCrypt.Verify(plainPassword, hash);
 

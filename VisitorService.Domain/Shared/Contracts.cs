@@ -46,7 +46,7 @@ public sealed class Contract : Notifiable
     public Contract MaxLength(string? value, int max, string key)
     {
         if(!string.IsNullOrEmpty(value) && value.Length > max)
-            AddNotification(key, $"A quantidade máxima de caracteres é {max} ");
+            AddNotification(key, $"A quantidade máxima de caracteres é {max}");
 
             return this;
     }
@@ -57,7 +57,7 @@ public sealed class Contract : Notifiable
         {
             if (value.Length > max)
             {
-                AddNotification(Key, "A quantidade máxima de caracteres é {max}");
+                AddNotification(Key, $"A quantidade máxima de caracteres é {max}");
             }
         }
         return this;

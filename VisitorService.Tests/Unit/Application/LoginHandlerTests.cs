@@ -1,11 +1,9 @@
 using Moq;
-using System.Threading.Tasks;
 using VisitorService.Application.UseCases;
 using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.ValueObject;
-using Xunit;
 using VisitorService.Domain.Services;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
@@ -19,6 +17,18 @@ public class LoginHandlerTests
         var mockPassword = new Mock<IPasswordService>();
         var mockAuth = new Mock<ITokenService>();
         var mockConfig = new Mock<IConfiguration>();
+
+        var mockSection = new Mock<IConfigurationSection>();
+
+        mockSection.Setup(s => s.Value).Returns("60");
+
+        mockConfig
+            .Setup(c => c.GetSection(It.IsAny<string>()))
+            .Returns(mockSection.Object);
+
+        mockConfig
+            .Setup(c => c[It.IsAny<string>()])
+            .Returns("60");
 
         var email = Email.Create("test@example.com");
 
