@@ -1,6 +1,6 @@
-# 🛂 Sistema de Controle de Visitantes - Backend
+# 🛂 Visitor Service API - Backend
 
-> Uma aplicação fullstack moderna e escalável para gerenciamento de acesso físico, permitindo que visitantes solicitem entrada e gestores aprovem ou rejeitem solicitações em tempo real.
+> Uma aplicação Backend API moderna e escalável para gerenciamento de acesso físico, permitindo que visitantes solicitem entrada e gestores aprovem ou rejeitem solicitações em tempo real.
 
 <p align="center"> <img src="https://img.shields.io/badge/C%23-239120?style=flat-square&logo=c-sharp&logoColor=white">
   <img src="https://img.shields.io/badge/Status-Em desenvolvimento-yellow?style=flat-square"> </p>
@@ -14,16 +14,32 @@ Este projeto está em **desenvolvimento ativo**. Atualmente, estou focado na cam
 - [x] Migração para EntityTypeConfiguration (Fluent API)
 - [x] Configuração de Relacionamentos Many-to-Many
 - [x] Configuração de Relacionamentos One-to-Many
-- [ ] Implementação de Authentication/JWT
+- [x] Implementação de Authentication/JWT
 - [ ] Implementação de Cache
+- [ ] Implementação de MCP Server
 - [x] Unit Tests (xUnit)
+
+---
+
+## 🚀 Diferenciais de Engenharia
+
+Diferente de CRUDS convencionais, este projeto aplica padrões de grandes sistemas corporativos:
+
+
+Result & Notification Patterns: Substituição de exceções por fluxos de retorno semânticos, aumentando a performance e a previsibilidade da API.
+
+
+Clean Architecture: Separação física rigorosa entre camadas, permitindo que a regra de negócio (Domínio) seja independente de frameworks e banco de dados.
+
+
+CI/CD Pipeline: Integração contínua configurada via GitHub Actions, garantindo que cada commit passe por build e testes automatizados
 
 ---
 
 ## 📌 Descrição do Projeto
 
 Esta aplicação foi desenvolvida pelo Squad 10 como proposta da Residência On-Board do Porto Digital em parceria com o Arco Mix.
-Este repositório contém o backend do Sistema de Controle de Visitantes, desenvolvido utilizando C# e Dotnet 9.0 seguindo princípios de DDD e Clean Arquitecture e Design Patterns.
+Este repositório contém o backend do Sistema de Controle de Visitantes, desenvolvido utilizando C# e Dotnet 9.0 seguindo princípios de DDD e Clean Architecture e Design Patterns.
 
 ### A aplicação possui duas principais áreas de acesso:
 
@@ -35,7 +51,7 @@ O código segue padrões limpos, Design Pattern e separação física entre dom�
 
 ---
 
-## 📁 Estrutura de Pastas
+## 📁 Estrutura da Solução
 
 A estrutura prioriza clareza e escalabilidade:
 ```
@@ -61,7 +77,7 @@ Infrastructure            → Banco de dados/ Repositórios
  ├── Migrations           → Migrações do banco de dados
  └── Repositories         → Implementações concretas repositório
 
-Interfaces                → Comunicação da API
+Interfaces/WebAPI         → Ponto de entrada da aplicação
  ├── dockerfile
  ├── Middleware
  └── Controllers          → Expõe as rotas da API
@@ -69,6 +85,15 @@ Interfaces                → Comunicação da API
 Tests                     → Camada de testes da aplicação
  └── Unit                 → Testes Unitários
 ```
+---
+## ⚙️ Tecnologias Utilizadas.
+
+- NET 9.0 (C#).
+- Entity Framework Core (SQL Server).
+- JWT para autenticação segura.
+- xUnit para testes automatizados.
+- Docker para containerização e padronização de ambiente
+
 ---
 
 ## 🧩 Filosofia da Arquitetura
@@ -84,23 +109,28 @@ Tests                     → Camada de testes da aplicação
 ## 🚀 Como Rodar o Projeto
 ### 1. Clonar o repositório
 ```
-git clone https://github.com/seu-repo.git
-cd seu-repo
+git clone https://github.com/deivid792/visitor-service-api
+
+cd visitor-service-api
 ```
-### 2. Instalar dependências
+### 2. Restaure as dependências
 ```
 dotnet restore
 ```
-### 3. Build do projeto
+### 3. Execute as migrações (se necessário)
+```
+dotnet ef database update
+```
+### 4. Build do projeto
 ```
 dotnet build
 ```
 
 Caso use Frontend próprio, atualize a URL conforme necessário.
 
-### 4. Rodar o servidor de desenvolvimento
+### 5. Rodar o servidor de desenvolvimento
 ```
-dotnet run
+dotnet run --project VisitorService.Interface
 ```
 
 
