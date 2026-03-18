@@ -18,7 +18,7 @@ namespace VisitorService.Domain.ValueObject
 
             var cleanValue = Regex.Replace(normalized, @"\D", "");
 
-            contract.PhoneLengthRange(cleanValue, "Phone");
+            contract.PhoneLengthBetween(cleanValue, "Phone");
 
             var phone = new Phone(cleanValue);
 
@@ -27,10 +27,6 @@ namespace VisitorService.Domain.ValueObject
                 phone.AddRangeNotification(contract.Errors);
             }
             return phone;
-        }
-        public static Phone FromDatabase(string value)
-        {
-            return new Phone(value);
         }
     }
 }

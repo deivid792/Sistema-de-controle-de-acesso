@@ -6,6 +6,6 @@ namespace VisitorService.Application.Interfaces
 {
     public interface IcreateVisitHandler
     {
-        Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitDto createVisitDto, Guid UserId);
+        Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitCommand createVisitDto, Guid UserId);
     }
 }

@@ -26,9 +26,5 @@ namespace VisitorService.Domain.ValueObject
 
             return name;
         }
-
-        [Obsolete("Use apenas para mapeamento do EF Core. Para criar novos nomes, use Name.Create().", false)]
-        public static Name FromDatabase(string? value) => new Name(value);
-
     }
 }

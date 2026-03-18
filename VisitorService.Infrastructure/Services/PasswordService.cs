@@ -9,7 +9,7 @@ namespace VisitorService.Infrastructure.Services
         {
             var hash = BCrypt.Net.BCrypt.HashPassword(plainPassword);
             var passwordHash = Password.Create(hash);
-            passwordHash.NotificationClear();
+            passwordHash.ClearNotifications();
             return passwordHash;
         }
 

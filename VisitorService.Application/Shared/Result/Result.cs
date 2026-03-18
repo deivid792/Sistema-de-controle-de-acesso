@@ -30,7 +30,7 @@ namespace VisitorService.Application.Shared.results
         public static Result<T> Fail(IEnumerable<Error> errors)
             => new Result<T>(errors);
 
-        public static Result<T> Fail(IEnumerable<NotificationItem> errors)
+        public static Result<T> Fail(IEnumerable<Notification> errors)
             => new Result<T>(errors.Select(e => (Error)e));
     }
 
@@ -52,7 +52,7 @@ namespace VisitorService.Application.Shared.results
         public static Result Fail(IEnumerable<Error> errors)
             => new Result(false, errors);
 
-        public static Result Fail(IEnumerable<NotificationItem> errors)
+        public static Result Fail(IEnumerable<Notification> errors)
             => new Result(false, errors.Select(e => (Error)e));
     }
 }

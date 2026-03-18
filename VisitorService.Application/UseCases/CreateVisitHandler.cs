@@ -19,7 +19,7 @@ namespace VisitorService.Application.UseCases
             _visitRepository = visitRepository;
         }
 
-        public async Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitDto dto, Guid UserId)
+        public async Task<Result<RegisterVisitResponseDto>> Handler(CreateVisitCommand dto, Guid UserId)
         {
             User? user = await _userRepository.GetByIdAsync(UserId);
 
@@ -30,7 +30,7 @@ namespace VisitorService.Application.UseCases
             if (Isthereaconflict)
                 return Result<RegisterVisitResponseDto>.Fail("Esse horário já está reservado.");
 
-            user.AddVisit(dto.Date, dto.Time, dto.Reason, dto.Category, "Pendente");
+            user.ScheduleVisit(dto.Date, dto.Time, dto.Reason, dto.Category);
 
             if (user.HasErrors)
                 return Result<RegisterVisitResponseDto>.Fail(user.Errors);

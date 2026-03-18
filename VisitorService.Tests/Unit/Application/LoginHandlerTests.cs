@@ -32,7 +32,7 @@ public class LoginHandlerTests
 
         var email = Email.Create("test@example.com");
 
-        var storedHash = Password.FromHash("HASHFAKE123");
+        var storedHash = Password.Create("HASHFAKE123");
 
         var fakeUser = User.Create(
             Name.Create("Deivid"),

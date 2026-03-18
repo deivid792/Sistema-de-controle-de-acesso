@@ -11,6 +11,7 @@
 Este projeto está em **desenvolvimento ativo**. Atualmente, estou focado na camada de Infraestrutura e Domínio.
 
 - [x] Refatoração de Entidades (Design by Contracts)
+- [ ] Identificação e desacoplamento de lógicas legadas (Em Andamento)
 - [x] Migração para EntityTypeConfiguration (Fluent API)
 - [x] Configuração de Relacionamentos Many-to-Many
 - [x] Configuração de Relacionamentos One-to-Many
@@ -38,8 +39,7 @@ CI/CD Pipeline: Integração contínua configurada via GitHub Actions, garantind
 
 ## 📌 Descrição do Projeto
 
-Esta aplicação foi desenvolvida pelo Squad 10 como proposta da Residência On-Board do Porto Digital em parceria com o Arco Mix.
-Este repositório contém o backend do Sistema de Controle de Visitantes, desenvolvido utilizando C# e Dotnet 9.0 seguindo princípios de DDD e Clean Architecture e Design Patterns.
+Este projeto é uma evolução autoral baseada no desafio técnico proposto durante a Residência On-Board (Porto Digital), onde colaborei com o Squad 10 em uma solução de controle de acesso. O presente repositório refina aquela arquitetura original, aplicando padrões avançados de .NET 9 e Clean Architecture.
 
 ### A aplicação possui duas principais áreas de acesso:
 

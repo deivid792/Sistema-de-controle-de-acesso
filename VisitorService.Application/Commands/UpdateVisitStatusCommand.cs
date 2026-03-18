@@ -1,6 +1,6 @@
 namespace VisitorService.Application.DTOS
 {
-    public class UpdateVisitStatusDto
+    public class UpdateVisitStatusCommand
     {
         public Guid VisitId { get; set; }
         public string Status { get; set; } = "";

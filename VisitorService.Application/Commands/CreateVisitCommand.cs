@@ -1,6 +1,6 @@
 namespace VisitorService.Application.DTOS
 {
-    public class CreateVisitDto
+    public class CreateVisitCommand
     {
         public DateOnly Date { get; init; }
         public TimeOnly Time { get; init; }

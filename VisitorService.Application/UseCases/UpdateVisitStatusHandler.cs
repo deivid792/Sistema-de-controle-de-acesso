@@ -23,14 +23,14 @@ namespace VisitorService.Application.UseCases
         _emailService = emailService;
     }
 
-    public async Task<Result<Visit>> Handle(UpdateVisitStatusDto dto, Guid gestorId)
+    public async Task<Result<Visit>> Handle(UpdateVisitStatusCommand dto, Guid ManagerId)
     {
-        var gestor = await _userRepository.GetByIdAsync(gestorId);
+        var Manager = await _userRepository.GetByIdAsync(ManagerId);
 
-        if (gestor == null)
+        if (Manager == null)
             return Result<Visit>.Fail("Usuário não encontrado.");
 
-        if (!gestor.Roles.Any(r => r.Name.Value == RoleType.Manager))
+        if (!Manager.Roles.Any(r => r.Name.Value == RoleType.Manager))
             return Result<Visit>.Fail("Apenas gestores podem aprovar ou rejeitar visitas.");
 
         var visit = await _visitRepository.GetByIdAsync(dto.VisitId);

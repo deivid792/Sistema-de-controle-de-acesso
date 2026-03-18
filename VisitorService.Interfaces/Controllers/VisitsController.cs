@@ -33,12 +33,12 @@ namespace VisitorService.Interfaces.Controllers
             _createVisitHandler = createVisitHandler;
         }
 
-        [Authorize(Roles = "Gestor")]
+        [Authorize(Roles = "Manager")]
         [HttpPut("status")]
-        public async Task<IActionResult> UpdateStatus([FromBody] UpdateVisitStatusDto dto)
+        public async Task<IActionResult> UpdateStatus([FromBody] UpdateVisitStatusCommand dto)
         {
-            var gestorId = User.GetUserId();
-            var result = await _updateVisitStatusHandler.Handle(dto, gestorId);
+            var ManagerId = User.GetUserId();
+            var result = await _updateVisitStatusHandler.Handle(dto, ManagerId);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Errors);
@@ -46,7 +46,7 @@ namespace VisitorService.Interfaces.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize(Roles = "Porteiro")]
+        [Authorize(Roles = "Security")]
         [HttpGet("today/approved")]
         public async Task<IActionResult> GetTodayApproved()
         {
@@ -58,7 +58,7 @@ namespace VisitorService.Interfaces.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize(Roles = "Porteiro")]
+        [Authorize(Roles = "Security")]
         [HttpPost("checkin")]
         public async Task<IActionResult> CheckIn([FromBody] VisitCheckDto dto)
         {
@@ -70,7 +70,7 @@ namespace VisitorService.Interfaces.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize(Roles = "Porteiro")]
+        [Authorize(Roles = "Security")]
         [HttpPost("checkout")]
         public async Task<IActionResult> CheckOut([FromBody] VisitCheckDto dto)
         {
@@ -82,7 +82,7 @@ namespace VisitorService.Interfaces.Controllers
             return Ok(result.Value);
         }
 
-        [Authorize(Roles = "Gestor")]
+        [Authorize(Roles = "Manager")]
         [HttpGet("gestor")]
         public async Task<IActionResult> GetAll()
         {
@@ -95,7 +95,7 @@ namespace VisitorService.Interfaces.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateVisit([FromBody] CreateVisitDto dto)
+        public async Task<IActionResult> CreateVisit([FromBody] CreateVisitCommand dto)
         {
             Guid user = User.GetUserId();
             var result = await _createVisitHandler.Handler(dto, user);

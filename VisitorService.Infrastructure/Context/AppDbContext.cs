@@ -22,7 +22,7 @@ namespace VisitorService.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<NotificationItem>();
+            modelBuilder.Ignore<Notification>();
             modelBuilder.Ignore<Notifiable>();
 
             modelBuilder.ApplyConfiguration(new UserMapping());

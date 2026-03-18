@@ -53,9 +53,9 @@ namespace VisitorService.Domain.Entities
 
         }
 
-        public void UpdateData(Name name, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
+        public void UpdateProfile(Name name, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
         {
-            NotificationClear();
+            ClearNotifications();
 
             AddRangeNotification(name.Errors);
 
@@ -96,15 +96,20 @@ namespace VisitorService.Domain.Entities
             _refreshTokens.Add(new RefreshToken(token, expirations));
         }
 
-        public void SetCreatedBy(Guid managerId, string? managerName = null)
+        public void AssignCreator(Guid managerId, string? managerName = null)
         {
+            if(CreatedByUserId != Guid.Empty && CreatedByUserId != null)
+            {
+                AddNotification("User.SetCreatedBy", "O criador desse usuário não pode ser alterado");
+            }
+
             CreatedByUserId = managerId;
             CreatedByUserName = managerName;
         }
 
-        public void AddVisit(DateOnly date, TimeOnly time, string reason, string category, string status)
+        public void ScheduleVisit(DateOnly date, TimeOnly time, string reason, string category)
         {
-            var visit = Visit.Create(this, date, time, category, reason, status);
+            var visit = Visit.Create(this, date, time, category, reason);
 
             if (visit.HasErrors)
                 this.AddRangeNotification(visit.Errors);

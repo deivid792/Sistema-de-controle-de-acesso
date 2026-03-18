@@ -29,10 +29,5 @@ namespace VisitorService.Domain.ValueObject
 
             return password;
         }
-
-        public static Password FromHash(string value)
-        {
-            return new Password(value);
-        }
     }
 }

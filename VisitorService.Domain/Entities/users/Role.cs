@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using VisitorService.Domain.Enums;
 using VisitorService.Domain.Shared;
 using VisitorService.Domain.ValueObjects;

@@ -20,7 +20,7 @@ namespace VisitorService.Domain.ValueObject
                 .IsNotNullOrWhiteSpace(cleanValue, "Cnpj")
                 .HasLength(cleanValue, 14, "Cnpj")
                 .IsRepeatedSequence(cleanValue, "Cnpj")
-                .IsCnpj(cleanValue, "Cnpj");
+                .ValidCnpj(cleanValue, "Cnpj");
 
             string formatted = !contract.HasErrors?
             Convert.ToUInt64(cleanValue).ToString(@"00\.000\.000\/0000\-00")

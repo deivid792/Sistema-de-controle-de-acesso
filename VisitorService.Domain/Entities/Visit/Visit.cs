@@ -28,21 +28,21 @@ namespace VisitorService.Domain.Entities
             Status = status;
         }
 
-        public static Visit Create(User user, DateOnly date, TimeOnly time, string reason, string category, string status )
+        public static Visit Create(User user, DateOnly date, TimeOnly time, string reason, string category )
         {
-            var reasonNoralized = reason?.Trim() ?? string.Empty;
-            var categoryNoralized = category?.Trim() ?? string.Empty;
+            var reasonNormalized = reason?.Trim() ?? string.Empty;
+            var categoryNormalized = category?.Trim() ?? string.Empty;
 
             var contract = new Contract()
             .Requires()
-            .IsNotNullOrWhiteSpaceList("Visit", [reasonNoralized,categoryNoralized])
-            .MaxLengthList( [reasonNoralized, categoryNoralized], 50, "Visit")
+            .IsNotNullOrWhiteSpaceList("Visit", [reasonNormalized,categoryNormalized])
+            .MaxLengthList( [reasonNormalized, categoryNormalized], 50, "Visit")
             .IsNotNullOrWhiteSpaceList("Visit", [date])
-            .IsGreaterOrEqualsThan("Visit", date)
+            .GreaterOrEqualToToday("Visit", date)
             .IsNotNullOrWhiteSpaceList("Visit", [time]);
 
 
-            var visit = new Visit(user, date, time, reasonNoralized, categoryNoralized, status );
+            var visit = new Visit(user, date, time, reasonNormalized, categoryNormalized, "Pending" );
 
             if (contract.HasErrors)
             {
@@ -53,7 +53,7 @@ namespace VisitorService.Domain.Entities
 
         public void UpdateStatus(string newStatus)
         {
-            if (newStatus != "Aprovada" && newStatus != "Rejeitada")
+            if (newStatus != "Approved" && newStatus != "Rejected")
             {
                 AddNotification("Visit.Status", "Status inválido.");
                 return;
@@ -64,7 +64,7 @@ namespace VisitorService.Domain.Entities
 
         public void CheckInVisit()
         {
-            if (Status != "Aprovada")
+            if (Status != "Approved")
             {
                 AddNotification("Visit.CheckIn", "Somente visitas aprovadas podem fazer check-in.");
                 return;
@@ -78,7 +78,7 @@ namespace VisitorService.Domain.Entities
 
             CheckIn = DateTime.Now;
 
-            Status = "Em Progresso";
+            Status = "InProgress";
         }
 
         public void CheckOutVisit()
@@ -96,7 +96,7 @@ namespace VisitorService.Domain.Entities
             }
 
             CheckOut = DateTime.Now;
-            Status = "Completo";
+            Status = "Completed";
         }
     }
 }

@@ -6,6 +6,6 @@ namespace VisitorService.Application.Interfaces
 {
     public interface IUpdateVisitStatusHandler
     {
-        Task<Result<Visit>> Handle(UpdateVisitStatusDto dto, Guid gestorId);
+        Task<Result<Visit>> Handle(UpdateVisitStatusCommand dto, Guid gestorId);
     };
 }

@@ -23,13 +23,13 @@ public sealed class Contract : Notifiable
         return this;
     }
 
-    public Contract IsNotNullOrWhiteSpaceList<T>(string Key , IEnumerable<T> values)
+    public Contract IsNotNullOrWhiteSpaceList<T>(string key , IEnumerable<T> values)
     {
         foreach(var value in values)
         {
             if (string.IsNullOrWhiteSpace(value?.ToString()))
             {
-                AddNotification(Key, $"O campo {value} não pode ser nulo ou ter espaços em branco ");
+                AddNotification(key, $"O campo {value} não pode ser nulo ou ter espaços em branco ");
             }
         }
         return this;
@@ -84,7 +84,7 @@ public sealed class Contract : Notifiable
         return this;
     }
 
-    public Contract IsCnpj (string? value, string key)
+    public Contract ValidCnpj (string? value, string key)
     {
         if ((!string.IsNullOrEmpty(value)) && (value.Length != 14 || !ValidateDigitCalculation(value)))
             AddNotification(key, "Cnpj ínvalido");
@@ -156,14 +156,14 @@ public sealed class Contract : Notifiable
 
         return this;
     }
-    public Contract PhoneLengthRange(string value, string key)
+    public Contract PhoneLengthBetween(string value, string key)
     {
         if((!string.IsNullOrEmpty(value)) && (value.Length < 10 || value.Length > 13))
             AddNotification(key, "O número de telefone deve ter entre 10 e 13 dígitos.");
 
         return this;
     }
-    public Contract IsGreaterOrEqualsThan(string Key, DateOnly date)
+    public Contract GreaterOrEqualToToday(string Key, DateOnly date)
     {
         if(date < DateOnly.FromDateTime(DateTime.Today))
         {
