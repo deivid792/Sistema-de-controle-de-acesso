@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Visitor.Cfg.Infrastructure.Cache;
-using VisitorService.aplication.Interface.Cache;
+using VisitorService.aplication.Interface;
 using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.Settings;
 using VisitorService.Application.UseCases;
+using VisitorService.Application.UseCases.Users.Commands;
+using VisitorService.Application.UseCases.Visits.Commands;
+using VisitorService.Application.UseCases.Visits.Queries;
 using VisitorService.Domain.Interfaces;
 using VisitorService.Domain.Services;
 using VisitorService.Infrastructure.Context;

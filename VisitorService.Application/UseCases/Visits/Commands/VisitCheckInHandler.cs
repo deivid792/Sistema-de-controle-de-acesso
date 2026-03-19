@@ -2,21 +2,29 @@ using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.results;
 using VisitorService.Domain.Entities;
+using VisitorService.Domain.Enums;
 using VisitorService.Domain.Interfaces;
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Visits.Commands
 {
     public class VisitCheckInHandler : IVisitCheckInHandler
 {
     private readonly IVisitRepository _visitRepo;
+    private readonly IUserRepository _userRepository;
 
-    public VisitCheckInHandler(IVisitRepository visitRepo)
+    public VisitCheckInHandler(IVisitRepository visitRepo, IUserRepository userRepository)
     {
         _visitRepo = visitRepo;
+        _userRepository = userRepository;
     }
 
-    public async Task<Result<Visit>> Handle(VisitCheckDto dto)
+    public async Task<Result<Visit>> Handle(VisitCheckDto dto, Guid securityId)
     {
+        var isSecurity = await _userRepository.IsUserInRoleAsync(securityId, RoleType.Manager);
+
+        if (!isSecurity )
+            return Result<Visit>.Fail("Apenas Seguranças podem aprovar ou rejeitar visitas.");
+
         var visit = await _visitRepo.GetByIdAsync(dto.VisitId);
 
         if (visit == null)

@@ -1,6 +1,3 @@
-using BCrypt.Net;
-using Xunit;
-
 public class PasswordTests
 {
     [Fact]

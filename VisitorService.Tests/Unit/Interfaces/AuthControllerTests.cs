@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Threading.Tasks;
 using VisitorService.Application.DTOS;
-using VisitorService.Application.Interfaces;
 using VisitorService.Interfaces.Controllers;
 using VisitorService.Application.Shared.results;
 using Xunit;
+using VisitorService.Application.UseCases.Users.Commands;
 
 public class AuthControllerTests
 {

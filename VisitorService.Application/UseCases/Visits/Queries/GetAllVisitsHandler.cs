@@ -1,9 +1,8 @@
-using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.results;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Interfaces;
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Visits.Queries
 {
     public class GetAllVisitsHandler : IGetAllVisitsHandler
 {

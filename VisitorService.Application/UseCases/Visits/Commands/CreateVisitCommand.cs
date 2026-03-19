@@ -1,4 +1,4 @@
-namespace VisitorService.Application.DTOS
+namespace isitorService.Application.UseCases.Visits.Commands
 {
     public class CreateVisitCommand
     {

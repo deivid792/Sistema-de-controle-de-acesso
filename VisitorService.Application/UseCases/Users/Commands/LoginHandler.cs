@@ -7,7 +7,7 @@ using VisitorService.Domain.Enums;
 using Microsoft.Extensions.Configuration;
 
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Users.Commands
 {
     public class LoginHandler : IloginHandler
 {

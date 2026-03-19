@@ -1,7 +1,7 @@
 using VisitorService.Application.DTOS;
 using VisitorService.Application.Shared.results;
 
-namespace VisitorService.Application.Interfaces
+namespace VisitorService.Application.UseCases.Users.Commands
 {
     public interface IRegisterVisitorHandler
     {

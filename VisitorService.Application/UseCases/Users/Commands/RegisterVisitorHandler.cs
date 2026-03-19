@@ -9,7 +9,7 @@ using VisitorService.Domain.Services;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Users.Commands
 {
     public class RegisterVisitorHandler : IRegisterVisitorHandler
     {

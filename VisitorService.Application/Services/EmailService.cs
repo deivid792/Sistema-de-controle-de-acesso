@@ -1,8 +1,8 @@
 using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.Extensions.Options;
-using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.Settings;
+using VisitorService.Application.Interfaces;
 
 public class EmailService : IEmailService
 {

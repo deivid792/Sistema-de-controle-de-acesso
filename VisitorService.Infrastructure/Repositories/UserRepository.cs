@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using VisitorService.Application.Interfaces;
 using VisitorService.Domain.Entities;
+using VisitorService.Domain.Enums;
 using VisitorService.Domain.ValueObject;
+using VisitorService.Domain.ValueObjects;
 using VisitorService.Infrastructure.Context;
 
 namespace VisitorService.Infrastructure.Repositories
@@ -46,6 +48,14 @@ namespace VisitorService.Infrastructure.Repositories
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsUserInRoleAsync(Guid id, RoleType roleName)
+        {
+            return await _context.Users
+            .Where(u => u.Id == id)
+            .Select(u => u.Roles.Any(r => r.Name.Value == roleName))
+            .FirstOrDefaultAsync();
         }
     }
 }

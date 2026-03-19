@@ -1,4 +1,4 @@
-namespace VisitorService.aplication.Interface.Cache
+namespace VisitorService.aplication.Interface
 {
     public interface ICacheService
     {

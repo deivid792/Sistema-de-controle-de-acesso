@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Caching.Memory;
-using VisitorService.aplication.Interface.Cache;
+using VisitorService.aplication.Interface;
 
 namespace Visitor.Cfg.Infrastructure.Cache
 {

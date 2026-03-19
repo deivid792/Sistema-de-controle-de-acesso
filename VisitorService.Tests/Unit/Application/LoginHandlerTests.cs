@@ -1,12 +1,11 @@
 using Moq;
-using VisitorService.Application.UseCases;
-using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.ValueObject;
 using VisitorService.Domain.Services;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using VisitorService.Application.UseCases.Users.Commands;
 
 public class LoginHandlerTests
 {

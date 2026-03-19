@@ -1,11 +1,11 @@
-using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.results;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Enums;
 using VisitorService.Domain.Interfaces;
+using VisitorService.Domain.ValueObjects;
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Visits.Commands
 {
     public class UpdateVisitStatusHandler : IUpdateVisitStatusHandler
 {
@@ -23,14 +23,11 @@ namespace VisitorService.Application.UseCases
         _emailService = emailService;
     }
 
-    public async Task<Result<Visit>> Handle(UpdateVisitStatusCommand dto, Guid ManagerId)
+    public async Task<Result<Visit>> Handle(UpdateVisitStatusCommand dto, Guid managerId)
     {
-        var Manager = await _userRepository.GetByIdAsync(ManagerId);
+        var isManager = await _userRepository.IsUserInRoleAsync(managerId, RoleType.Manager);
 
-        if (Manager == null)
-            return Result<Visit>.Fail("Usuário não encontrado.");
-
-        if (!Manager.Roles.Any(r => r.Name.Value == RoleType.Manager))
+        if (!isManager)
             return Result<Visit>.Fail("Apenas gestores podem aprovar ou rejeitar visitas.");
 
         var visit = await _visitRepository.GetByIdAsync(dto.VisitId);

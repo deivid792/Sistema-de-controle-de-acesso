@@ -1,4 +1,4 @@
-namespace VisitorService.Application.DTOS
+namespace VisitorService.Application.UseCases.Users.Commands
 {
     public class LoginCommand
 {

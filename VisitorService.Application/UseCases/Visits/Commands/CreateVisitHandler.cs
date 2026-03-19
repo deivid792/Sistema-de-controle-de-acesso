@@ -1,10 +1,11 @@
+using isitorService.Application.UseCases.Visits.Commands;
 using VisitorService.Application.DTOS;
 using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.results;
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Interfaces;
 
-namespace VisitorService.Application.UseCases
+namespace VisitorService.Application.UseCases.Visits.Commands
 {
     public class CreateVisitHandler : IcreateVisitHandler
     {

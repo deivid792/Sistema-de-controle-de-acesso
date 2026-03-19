@@ -1,10 +1,7 @@
-using Xunit;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Security.Claims;
 using VisitorService.Infrastructure.Services;
-using Microsoft.Extensions.Configuration.Memory;
 
 
 namespace VisitorService.Tests.Services

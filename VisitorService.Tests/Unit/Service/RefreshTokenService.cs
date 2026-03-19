@@ -1,9 +1,6 @@
-using System;
-using System.Text;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using FluentAssertions;
-using Xunit;
 using VisitorService.Infrastructure.Services;
 
 namespace VisitorService.Tests.Unit.Services

@@ -1,7 +1,9 @@
+using isitorService.Application.UseCases.Visits.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VisitorService.Application.DTOS;
-using VisitorService.Application.Interfaces;
+using VisitorService.Application.UseCases.Visits.Commands;
+using VisitorService.Application.UseCases.Visits.Queries;
 using VisitorService.Interfaces.Extensions;
 
 namespace VisitorService.Interfaces.Controllers
@@ -62,7 +64,9 @@ namespace VisitorService.Interfaces.Controllers
         [HttpPost("checkin")]
         public async Task<IActionResult> CheckIn([FromBody] VisitCheckDto dto)
         {
-            var result = await _visitCheckInHandler.Handle(dto);
+            var SecurityId = User.GetUserId();
+
+            var result = await _visitCheckInHandler.Handle(dto, SecurityId);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Errors);
@@ -74,7 +78,9 @@ namespace VisitorService.Interfaces.Controllers
         [HttpPost("checkout")]
         public async Task<IActionResult> CheckOut([FromBody] VisitCheckDto dto)
         {
-            var result = await _visitCheckOutHandler.Handle(dto);
+            var securityId = User.GetUserId();
+
+            var result = await _visitCheckOutHandler.Handle(dto, securityId);
 
             if (!result.IsSuccess)
                 return BadRequest(result.Errors);

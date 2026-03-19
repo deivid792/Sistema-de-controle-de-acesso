@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VisitorService.Application.DTOS;
-using VisitorService.Application.Interfaces;
+using VisitorService.Application.UseCases.Users.Commands;
+
 
 namespace VisitorService.Interfaces.Controllers
 {
