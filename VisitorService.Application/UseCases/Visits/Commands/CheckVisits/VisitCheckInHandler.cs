@@ -18,7 +18,7 @@ namespace VisitorService.Application.UseCases.Visits.Commands
         _userRepository = userRepository;
     }
 
-    public async Task<Result<Visit>> Handle(VisitCheckDto dto, Guid securityId)
+    public async Task<Result<Visit>> Handle(VisitCheckCommand dto, Guid securityId)
     {
         var isSecurity = await _userRepository.IsUserInRoleAsync(securityId, RoleType.Manager);
 

@@ -62,7 +62,7 @@ namespace VisitorService.Interfaces.Controllers
 
         [Authorize(Roles = "Security")]
         [HttpPost("checkin")]
-        public async Task<IActionResult> CheckIn([FromBody] VisitCheckDto dto)
+        public async Task<IActionResult> CheckIn([FromBody] VisitCheckCommand dto)
         {
             var SecurityId = User.GetUserId();
 
@@ -76,7 +76,7 @@ namespace VisitorService.Interfaces.Controllers
 
         [Authorize(Roles = "Security")]
         [HttpPost("checkout")]
-        public async Task<IActionResult> CheckOut([FromBody] VisitCheckDto dto)
+        public async Task<IActionResult> CheckOut([FromBody] VisitCheckCommand dto)
         {
             var securityId = User.GetUserId();
 

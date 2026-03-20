@@ -4,8 +4,8 @@ using VisitorService.Domain.Entities;
 
 namespace VisitorService.Application.UseCases.Visits.Commands
 {
-    public interface IVisitCheckOutHandler
+    public interface IVisitCheckInHandler
     {
-        Task<Result<Visit>> Handle(VisitCheckDto dto, Guid securityId);
+        Task<Result<Visit>> Handle(VisitCheckCommand dto, Guid securityId);
     }
 }
