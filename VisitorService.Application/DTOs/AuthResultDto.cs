@@ -6,6 +6,5 @@ namespace VisitorService.Application.DTOS
     public string RefeshToken { get; set; } = null!;
     public DateTime ExpiresAccessTokenIn { get; set; }
     public UserResponseDto User{ get; set; } = null!;
-
 }
 }

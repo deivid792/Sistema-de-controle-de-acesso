@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VisitorService.Application.DTOS;
 using VisitorService.Application.UseCases.Users.Commands;
+using VisitorService.Application.UseCases.Users.Commands.CreateManager;
+using VisitorService.Interfaces.Extensions;
 
 
 namespace VisitorService.Interfaces.Controllers
@@ -12,11 +13,13 @@ namespace VisitorService.Interfaces.Controllers
     {
         private readonly IRegisterVisitorHandler _registerHandler;
         private readonly IloginHandler _loginHandler;
+        private readonly ICreateManagerHandler _createManagerHandler;
 
-        public AuthController(IRegisterVisitorHandler registerHandler, IloginHandler loginHandler)
+        public AuthController(IRegisterVisitorHandler registerHandler, IloginHandler loginHandler, ICreateManagerHandler createManagerHandler)
         {
             _registerHandler = registerHandler;
             _loginHandler = loginHandler;
+            _createManagerHandler = createManagerHandler;
         }
 
 
@@ -40,6 +43,19 @@ namespace VisitorService.Interfaces.Controllers
                 return Unauthorized(new { error = result.Errors });
 
             return Ok(result.Value);
+        }
+
+        [HttpPost("Create-manager")]
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> CreateManager([FromBody] CreateManagerCommand command)
+        {
+            var managerId = User.GetUserId();
+
+            var result = await _createManagerHandler.Handle(command, managerId);
+            if (!result.IsSuccess)
+                return BadRequest(result.Errors);
+
+            return StatusCode(201);
         }
     }
 }

@@ -5,6 +5,7 @@ using VisitorService.Interfaces.Controllers;
 using VisitorService.Application.Shared.results;
 using Xunit;
 using VisitorService.Application.UseCases.Users.Commands;
+using VisitorService.Application.UseCases.Users.Commands.CreateManager;
 
 public class AuthControllerTests
 {
@@ -13,6 +14,7 @@ public class AuthControllerTests
     {
         var mockRegister = new Mock<IRegisterVisitorHandler>();
         var mockLogin = new Mock<IloginHandler>();
+        var mockCreateManager = new Mock<ICreateManagerHandler>();
 
         mockLogin
             .Setup(l => l.Handle(It.IsAny<LoginCommand>()))
@@ -24,7 +26,7 @@ public class AuthControllerTests
                 }
             ));
 
-        var controller = new AuthController(mockRegister.Object, mockLogin.Object);
+        var controller = new AuthController(mockRegister.Object, mockLogin.Object, mockCreateManager.Object);
 
         var command = new LoginCommand
         {

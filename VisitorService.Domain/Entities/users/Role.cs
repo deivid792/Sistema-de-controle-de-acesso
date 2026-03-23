@@ -39,26 +39,5 @@ namespace VisitorService.Domain.Entities
 
             return role;
         }
-
-        public static Role Visitor()
-        {
-            return Role.Create(
-                RoleName.Create(RoleType.Visitor),
-                 "Perfil com permissões limitadas, focado na visualização de dados e gerenciamento do próprio cadastro.");
-        }
-
-        public static Role Manager()
-        {
-            return Role.Create(
-                RoleName.Create(RoleType.Manager),
-                 "Acesso total ao sistema, com poderes para gerenciar usuários, configurar roles, extrair relatórios e auditar logs");
-        }
-
-        public static Role Security()
-        {
-            return Role.Create(
-                RoleName.Create(RoleType.Security),
-                 "Responsável pelo controle de fluxo, execução de check-in, check-out e monitoramento de acessos em tempo real.");
-        }
     }
 }

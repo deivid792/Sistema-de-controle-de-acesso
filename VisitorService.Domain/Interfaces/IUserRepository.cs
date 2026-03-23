@@ -1,5 +1,6 @@
 using VisitorService.Domain.Entities;
 using VisitorService.Domain.Enums;
+using VisitorService.Domain.ValueObject;
 
 namespace VisitorService.Application.Interfaces
 {
@@ -10,5 +11,6 @@ namespace VisitorService.Application.Interfaces
     Task AddAsync(User user);
     Task UpdateAsync(User user);
     Task<bool> IsUserInRoleAsync(Guid id, RoleType roleName);
+    Task<Name?> GetByNameAsync(Guid id);
 }
 }

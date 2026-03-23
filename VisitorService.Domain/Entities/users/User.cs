@@ -25,7 +25,7 @@ namespace VisitorService.Domain.Entities
 
         private User()  : base() { }
 
-        private User(Name name, Email email, Password password, Phone? phone, string? company, Cnpj? cnpj) : base()
+        private User(Name name, Email email, Password password, Phone? phone, string? company, Cnpj? cnpj, Guid? createdByUserId, string? createdByUserName ) : base()
         {
             Name = name;
             Email = email;
@@ -33,11 +33,13 @@ namespace VisitorService.Domain.Entities
             Phone = phone;
             Company = company;
             Cnpj = cnpj;
+            CreatedByUserId = createdByUserId;
+            CreatedByUserName = createdByUserName;
         }
 
-        public static User Create(Name name, Email email, Password password, Phone? phone = null, string? company = null, Cnpj? cnpj = null)
+        public static User Create(Name name, Email email, Password password, Phone? phone = null, string? company = null, Cnpj? cnpj = null, Guid? CreatedByUserId = null, string? CreatedByUserName = null)
         {
-            var user = new User(name, email, password, phone, company, cnpj);
+            var user = new User(name, email, password, phone, company, cnpj, CreatedByUserId ,CreatedByUserName);
 
             user.AddRangeNotification(name.Errors);
             user.AddRangeNotification(email.Errors);

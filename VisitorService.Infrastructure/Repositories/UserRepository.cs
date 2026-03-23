@@ -22,6 +22,7 @@ namespace VisitorService.Infrastructure.Repositories
             return await _context.Users
                 .Include(u => u.Roles)
                 .Include(u => u.Visits)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
@@ -55,6 +56,14 @@ namespace VisitorService.Infrastructure.Repositories
             return await _context.Users
             .Where(u => u.Id == id)
             .Select(u => u.Roles.Any(r => r.Name.Value == roleName))
+            .FirstOrDefaultAsync();
+        }
+
+        public async Task<Name?> GetByNameAsync(Guid id)
+        {
+            return await _context.Users
+            .Where(u => u.Id == id)
+            .Select(u => u.Name)
             .FirstOrDefaultAsync();
         }
     }
