@@ -14,11 +14,11 @@ namespace VisitorService.Domain.Entities
         public Guid? CreatedByUserId { get; private set; }
         public string? CreatedByUserName { get; private set; }
 
-        private readonly List<Role> _Roles = new();
+        private readonly List<Role> _roles = new();
         private readonly List<Visit> _visits = new();
         private readonly List<RefreshToken> _refreshTokens = new();
 
-        public IReadOnlyCollection<Role> Roles => _Roles.AsReadOnly();
+        public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
         public IReadOnlyCollection<Visit> Visits => _visits.AsReadOnly();
         public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
@@ -83,13 +83,13 @@ namespace VisitorService.Domain.Entities
                     AddNotification("User.AddRole", "O usuário ja possui essa role.");
             };
 
-            _Roles.Add(role);
+            _roles.Add(role);
         }
 
         public void RemoveRole(Role role)
         {
-            if (_Roles.Contains(role))
-                _Roles.Remove(role);
+            if (_roles.Contains(role))
+                _roles.Remove(role);
         }
 
         public void AddRefreshToken(string token, int daysToExpiry)

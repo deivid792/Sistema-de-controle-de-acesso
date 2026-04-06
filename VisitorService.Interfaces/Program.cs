@@ -5,6 +5,7 @@ using VisitorService.Application.Interfaces;
 using VisitorService.Application.Shared.Settings;
 using VisitorService.Application.UseCases;
 using VisitorService.Application.UseCases.Users.Commands;
+using VisitorService.Application.UseCases.Users.Commands.CreateManager;
 using VisitorService.Application.UseCases.Visits.Commands;
 using VisitorService.Application.UseCases.Visits.Queries;
 using VisitorService.Domain.Interfaces;
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IRegisterVisitorHandler, RegisterVisitorHandler>();
 builder.Services.AddScoped<IUpdateVisitStatusHandler, UpdateVisitStatusHandler>();
 builder.Services.AddScoped<IVisitCheckInHandler, VisitCheckInHandler>();
 builder.Services.AddScoped<IVisitCheckOutHandler, VisitCheckOutHandler>();
+builder.Services.AddScoped<ICreateManagerHandler, CreateManagerHandler>();
 
 // Email Settings
 builder.Services.Configure<EmailSettings>(

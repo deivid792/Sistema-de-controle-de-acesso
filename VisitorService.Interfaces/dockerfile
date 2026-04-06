@@ -1,17 +1,20 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
-WORKDIR /app
+WORKDIR /src
 
-COPY ../*.sln ./
-COPY ../VisitorService.Domain/*.csproj ./VisitorService.Domain/
-COPY ../VisitorService.Infrastructure/*.csproj ./VisitorService.Infrastructure/
-COPY ../VisitorService.Application/*.csproj ./VisitorService.Application/
-RUN dotnet restore
+COPY ["VisitorService.Domain/VisitorService.Domain.csproj", "VisitorService.Domain/"]
+COPY ["VisitorService.Infrastructure/VisitorService.Infrastructure.csproj", "VisitorService.Infrastructure/"]
+COPY ["VisitorService.Application/VisitorService.Application.csproj", "VisitorService.Application/"]
+COPY ["VisitorService.Interfaces/VisitorService.Interfaces.csproj", "VisitorService.Interfaces/"]
 
-COPY ../VisitorService.Domain ./VisitorService.Domain
-COPY ../VisitorService.Infrastructure ./VisitorService.Infrastructure
-COPY ../VisitorService.Application ./VisitorService.Application
-COPY ../VisitorService.Interfaces ./VisitorService.Interfaces
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet restore "VisitorService.Interfaces/VisitorService.Interfaces.csproj"
+
+COPY VisitorService.Domain/ VisitorService.Domain/
+COPY VisitorService.Infrastructure/ VisitorService.Infrastructure/
+COPY VisitorService.Application/ VisitorService.Application/
+COPY VisitorService.Interfaces/ VisitorService.Interfaces/
+
+WORKDIR "/src/VisitorService.Interfaces"
+RUN dotnet publish "VisitorService.Interfaces.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS runtime
 WORKDIR /app
